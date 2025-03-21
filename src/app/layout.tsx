@@ -37,7 +37,7 @@ export default function RootLayout({
           </nav>
         </header>
 
-        <aside className="fixed top-16 left-0 w-[240px] min-h-[calc(100vh-4rem)] bg-purple-500"></aside>
+        <aside className="fixed top-16 left-0 w-[240px] h-[calc(100vh-64px)] bg-purple-500"></aside>
 
         <div className="ml-[240px] mt-16 h-vh overflow-auto">
           <main>{children}</main>
