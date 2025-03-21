@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Link from "next/link";
 import SideBar from "@/components/SideBar";
-// import SideBar from "@/components/SideBar";
 
 export const metadata: Metadata = {
   title: "Documents",
