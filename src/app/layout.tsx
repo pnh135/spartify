@@ -39,7 +39,7 @@ export default function RootLayout({
 
         <aside className="fixed top-16 left-0 w-[240px] h-[calc(100vh-64px)] bg-purple-500"></aside>
 
-        <div className="ml-[240px] mt-16 h-vh overflow-auto">
+        <div className="ml-[240px] mt-16 min-h-screen overflow-auto flex-1">
           <main>{children}</main>
           <footer className="bg-green-500">footer</footer>
         </div>

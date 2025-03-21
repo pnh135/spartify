@@ -2,7 +2,7 @@ import React from "react";
 
 function SearchPage() {
   return (
-    <div className="flex flex-col rounded-xl bg-container-bg-primary m-6 h-vh ">
+    <div className="flex flex-col rounded-xl bg-container-bg-primary m-6">
       <span className=" text-2xl font-bold p-4">검색 결과</span>
       <div className="flex justify-center  gap-32 mt-10 pb-10">
         <div className="bg-bg-primary w-[400px] h-[250px] rounded-xl flex flex-col  p-4 items-center justify-center gap-6">
