@@ -14,7 +14,7 @@ const config: Config = {
         "bg-primary": "#1C1C1C",
         "container-bg-primary": "#2E2E2E",
         "text-primary": "#fbfbfb",
-        accent: "#20E937",
+        accent: "20E937",
       },
     },
   },
