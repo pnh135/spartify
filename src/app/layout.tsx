@@ -29,7 +29,7 @@ export default function RootLayout({
             <section>
               <input
                 placeholder="What do you want to play?"
-                className="hidden md:block" /* 모바일 사이즈부터 숨 */
+                className="hidden md:block h-8" /* 모바일 사이즈부터 숨 */
               />
             </section>
             <section className="flex gap-7">
