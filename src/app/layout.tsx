@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Link from "next/link";
+import SideBar from "@/components/SideBar";
 // import SideBar from "@/components/SideBar";
 
 export const metadata: Metadata = {
@@ -28,23 +29,25 @@ export default function RootLayout({
             <section>
               <input
                 placeholder="What do you want to play?"
-                className="hidden md:block"
+                className="hidden md:block" /* 모바일 사이즈부터 숨 */
               />
             </section>
             <section className="flex gap-7">
               <Link href="/login">
                 <p>로그인</p>
               </Link>
-              {/* 로그인 */}
+              {/* 로그인/ 로그아웃 전환 예정 */}
               <Link href="/profile">
                 <p>프로필</p>
               </Link>
-              {/* 프로필 이미지 */}
+              {/* 로그인 시 프로필 이미지 */}
             </section>
           </nav>
         </header>
 
-        <aside className="fixed top-16 left-0 w-[240px] h-[calc(100vh-4rem)] bg-purple-500"></aside>
+        <aside className="fixed top-16 left-0 w-[240px] h-[calc(100vh-4rem)]">
+          <SideBar />
+        </aside>
 
         <div className="ml-[240px] mt-16 h-[calc(100vh-4rem)] overflow-y-auto">
           <main className="bg-container-bg-primary m-4 border border-transparent rounded-lg">
