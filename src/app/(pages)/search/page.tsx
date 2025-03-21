@@ -2,7 +2,7 @@ import React from "react";
 
 function SearchPage() {
   return (
-    <div className="flex flex-col rounded-xl bg-container-bg-primary m-6 h-screen ">
+    <div className="flex flex-col rounded-xl bg-container-bg-primary m-6 h-vh ">
       <span className=" text-2xl font-bold p-4">검색 결과</span>
       <div className="flex justify-center  gap-32 mt-10">
         <div className="bg-bg-primary w-[400px] h-[250px] rounded-xl flex flex-col  p-4 items-center justify-center gap-6">
@@ -17,14 +17,32 @@ function SearchPage() {
         </div>
       </div>
       <section>
-        <span className="font-bold text-2xl p-4 overflow-x-auto whitespace-nowrap scroll-smooth">
+        <span className="font-bold text-2xl p-4 overflow-x-auto whitespace-nowrap scroll-smooth ">
           앨범 리스트
         </span>
-        <div className="w-[100px] h-[100px] bg-white text-black">앨범 1</div>
+        <div className="flex gap-4 overflow-x-auto whitespace-nowrap scroll-smooth p-4 hide-scrollbar">
+          {Array.from({ length: 20 }, (_, index) => (
+            <div
+              key={index}
+              className="w-[200px] h-[200px] bg-white text-black flex items-center justify-center flex-shrink-0 p-4"
+            >
+              앨범 {index + 1}
+            </div>
+          ))}
+        </div>
       </section>
       <section>
         <span className="font-bold text-2xl p-4">연관 앨범</span>
-        <div></div>
+        <div className="flex gap-4 overflow-x-auto overflow-hidden whitespace-nowrap scroll-smooth p-4 hide-scrollbar">
+          {Array.from({ length: 20 }, (_, index) => (
+            <div
+              key={index}
+              className="w-[200px] h-[200px] bg-white text-black flex items-center justify-center flex-shrink-0 p-4"
+            >
+              앨범 {index + 1}
+            </div>
+          ))}
+        </div>
       </section>
     </div>
   );
