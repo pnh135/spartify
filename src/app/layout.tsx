@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className="bg-charcoal text-white">
-        <header className="fixed top-0 left-0 w-full h-16 bg-gunmetal">
+        <header className="fixed top-0 left-0 w-full h-16 bg-charcoal">
           <nav className="flex h-full justify-between items-center px-4">
             <section>
               <Link href="/" className="flex flex-row justify-center">
@@ -29,7 +29,7 @@ export default function RootLayout({
             <section>
               <input
                 placeholder="What do you want to play?"
-                className="hidden md:block h-8" /* 모바일 사이즈부터 숨김 */
+                className="bg-gunmetal border border-transparent rounded-full h-10 px-10 focus:ring-2 focus:ring-inset focus:ring-gray-600 focus:outline-none hidden md:block " /* 모바일 사이즈부터 숨김 */
               />
             </section>
             <section className="flex gap-7">
@@ -54,7 +54,7 @@ export default function RootLayout({
             <QueryProvider>{children}</QueryProvider>
           </main>
           <footer className="bg-charcoal font-thin p-2 relative">
-            <p className="font-normal">©2025 project-Spartify</p>
+            <p>©2025 project-Spartify</p>
             <p>문정빈, 박나현, 송제우, 오영진, 이수민</p>
           </footer>
         </div>
