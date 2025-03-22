@@ -49,7 +49,7 @@ function AlbumDetailPage() {
           src="/dog.jpeg"
           alt="Artist Image"
           width={800}
-          height={200}
+          height={300}
           className=" bg-gray-500"
         />
         <div className="flex flex-row justify-between text-white w-full p-4 ">
