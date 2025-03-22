@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Link from "next/link";
 import SideBar from "@/components/SideBar";
+import QueryProvider from "../providers/QueryProvider";
 
 export const metadata: Metadata = {
   title: "Documents",
@@ -50,7 +51,7 @@ export default function RootLayout({
 
         <div className="ml-[240px] mt-16 h-[calc(100vh-4rem)] overflow-y-auto">
           <main className="bg-gunmetal m-4 border border-transparent rounded-lg">
-            {children}
+            <QueryProvider>{children}</QueryProvider>
           </main>
           <footer className="bg-green-500 relative">footer</footer>
         </div>
