@@ -20,8 +20,10 @@ export default async function AlbumDetailPage({
   return (
     <div className="p-6 space-y-8">
       <div className="flex flex-col items-center">
-        <img
+        <Image
           src={album.images?.[0]?.url}
+          width={500}
+          height={500}
           alt={album.name}
           className="rounded-xl shadow-xl w-64 h-64 object-cover"
         />
