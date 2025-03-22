@@ -15,12 +15,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className="bg-bg-primary text-white">
-        <header className="fixed top-0 left-0 w-full h-16 bg-container-bg-primary">
+      <body className="bg-charcoal text-white">
+        <header className="fixed top-0 left-0 w-full h-16 bg-gunmetal">
           <nav className="flex h-full justify-between items-center px-4">
             <section>
               <Link href="/" className="flex flex-row justify-center">
-                <div className="bg-accent border border-transparent w-10 h-10 rounded-full" />
+                <div className="bg-neongreen border border-transparent w-10 h-10 rounded-full" />
                 {/* 로고가 들어갈 곳 */}
                 <p className="p-2">Spartify</p>
               </Link>
@@ -49,7 +49,7 @@ export default function RootLayout({
         </aside>
 
         <div className="ml-[240px] mt-16 h-[calc(100vh-4rem)] overflow-y-auto">
-          <main className="bg-container-bg-primary m-4 border border-transparent rounded-lg">
+          <main className="bg-gunmetal m-4 border border-transparent rounded-lg">
             {children}
           </main>
           <footer className="bg-green-500 relative">footer</footer>
