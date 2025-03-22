@@ -29,7 +29,7 @@ export default function RootLayout({
             <section>
               <input
                 placeholder="What do you want to play?"
-                className="hidden md:block h-8" /* 모바일 사이즈부터 숨 */
+                className="hidden md:block h-8" /* 모바일 사이즈부터 숨김 */
               />
             </section>
             <section className="flex gap-7">
@@ -53,7 +53,10 @@ export default function RootLayout({
           <main className="bg-gunmetal m-4 border border-transparent rounded-lg">
             <QueryProvider>{children}</QueryProvider>
           </main>
-          <footer className="bg-green-500 relative">footer</footer>
+          <footer className="bg-charcoal font-thin p-2 relative">
+            <p className="font-normal">©2025 project-Spartify</p>
+            <p>문정빈, 박나현, 송제우, 오영진, 이수민</p>
+          </footer>
         </div>
       </body>
     </html>
