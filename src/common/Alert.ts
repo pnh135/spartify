@@ -1,5 +1,6 @@
 import Swal from "sweetalert2";
 
+// 로그인 완료 등 어떠한 기능 완료 시 사용
 export const AlertSuccess = (title = "Success", text = "") => {
   Swal.fire({
     icon: "success",
@@ -12,6 +13,7 @@ export const AlertSuccess = (title = "Success", text = "") => {
   });
 };
 
+// 데이터 불러오기 실패 등 기능 오류 시 사용
 export const AlertError = (title = "Error", text = "") => {
   Swal.fire({
     icon: "error",
@@ -20,6 +22,7 @@ export const AlertError = (title = "Error", text = "") => {
   });
 };
 
+// 로그인이 필요한 정보임을 알리는 등 정보 안내 시 사용
 export const AlertInfo = (title = "Info", text = "") => {
   Swal.fire({
     icon: "info",
@@ -28,6 +31,7 @@ export const AlertInfo = (title = "Info", text = "") => {
   });
 };
 
+// 파일 삭제나 유저 정보 변경 등 승인이 필요한 기능 사용 시 사용
 export const AlertConfirm = () => {
   Swal.fire({
     title: "정말로 삭제하시겠습니까?",
