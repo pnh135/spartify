@@ -23,7 +23,7 @@ importers:
       react-dom:
         specifier: ^18
         version: 18.3.1(react@18.3.1)
-git reset --soft HEAD~1      react-icons:
+      react-icons:
         specifier: ^5.5.0
         version: 5.5.0(react@18.3.1)
       zustand:
