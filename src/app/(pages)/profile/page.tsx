@@ -8,6 +8,7 @@ import { RiFileCopyLine } from "react-icons/ri";
 import { HiMiniUser } from "react-icons/hi2";
 import AlbumList from "../../../components/AlbumList";
 import type { album } from "../../../types/album";
+import { AlertInfo } from "@/common/Alert";
 
 //   주석달기
 // 앨범 컴포넌트 Link태그로 감싸서 디테일 창으로 넘기기
@@ -54,6 +55,7 @@ function ProfilePage() {
   const [toggle, setToggle] = useState(false);
 
   const handleSettingToggle = () => {
+    AlertInfo("확인용 코드");
     setToggle(!toggle);
   };
 
