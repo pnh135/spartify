@@ -1,5 +1,5 @@
-import AlbumList from "@/components/AlbumList";
-import { catData } from "./(pages)/profile/page";
+// import AlbumList from "@/components/AlbumList";
+// import { catData } from "./(pages)/profile/page";
 
 export default function Home() {
   return (
