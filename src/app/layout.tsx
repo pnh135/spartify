@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className="bg-bg-primary text-white">
+      <body className="gunmetal text-white">
         <header className="fixed top-0 left-0 w-full h-16 bg-container-bg-primary">
           <nav className="flex h-full justify-between items-center px-4">
             <section>
