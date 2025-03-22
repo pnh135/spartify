@@ -10,11 +10,14 @@ export type SignUpCredentials = AuthCredentials & {
 };
 
 export type AuthResponse = {
-  user: User;
-  session: Session;
+  user: User | null;
+  session: Session | null;
   weakPassword?: WeakPassword;
 };
 
+export type Provider = "google" | "spotify" | string;
+
 export type OAuthResponse = {
+  provider: Provider;
   url: string;
 };
