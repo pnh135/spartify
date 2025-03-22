@@ -6,11 +6,103 @@ import { AiOutlineEllipsis } from "react-icons/ai";
 import { FaPen } from "react-icons/fa";
 import { RiFileCopyLine } from "react-icons/ri";
 import { HiMiniUser } from "react-icons/hi2";
+import { IoIosClose } from "react-icons/io";
 import AlbumList from "../../../components/AlbumList";
 import type { album } from "../../../types/album";
 
 //   주석달기
-// 앨범 컴포넌트 Link태그로 감싸서 디테일 창으로 넘기기
+
+function ProfilePage() {
+  const [optionToggle, setOptionToggle] = useState(false);
+  const [profileSettingModal, setProfileSettingModal] = useState(true);
+
+  const handleOptionToggle = () => {
+    setOptionToggle(!optionToggle);
+  };
+
+  const handleProfileSetting = () => {
+    setProfileSettingModal(!profileSettingModal);
+    setOptionToggle(false);
+  };
+
+  return (
+    <main className="bg-zinc-950 rounded-2xl m-6 min-h-screen pb-10">
+      <section className="w-full h-[250px] bg-gradient-to-b from-zinc-600 to-zinc-800 rounded-t-2xl flex flex-row items-center mb-8">
+        <figure className="w-[200px] h-[200px] flex justify-center items-center text-7xl text-zinc-500 bg-zinc-800 shadow-zinc-900 shadow-lg rounded-full ml-10">
+          <HiMiniUser />{" "}
+          {/* 여기에 useState를 사용해서 사용자 프로필 사진 반환 */}
+        </figure>
+        <section className="text-white ml-10">
+          <p className="text-[14px]">프로필</p>
+          <h1 className="text-7xl font-black mt-3">sm</h1>
+          <p className="text-[14px] font-normal mt-2">좋아요한 앨범 수 개</p>
+        </section>
+      </section>
+      <section className="relative">
+        <button
+          type="button"
+          onClick={handleOptionToggle}
+          className=" hover:cursor-pointer"
+        >
+          <AiOutlineEllipsis className="text-zinc-400 text-4xl ml-10 hover:text-zinc-100" />
+        </button>
+        {optionToggle ? (
+          <section className="absolute z-10 w-[160px] h-[100px] bg-zinc-800 rounded-md ml-10 text-left text-white p-1">
+            <button
+              type="button"
+              onClick={handleProfileSetting}
+              className="h-1/2 flex w-full items-center pl-3 gap-3 hover:bg-zinc-700"
+            >
+              <FaPen />
+              프로필 수정
+            </button>
+            <button className="h-1/2 flex w-full items-center pl-3 gap-3 hover:bg-zinc-700">
+              <RiFileCopyLine />
+              프로필 링크 복사
+            </button>
+          </section>
+        ) : null}
+      </section>
+      {/* 프로필 수정 모달창 */}
+      {profileSettingModal ? (
+        <section className="fixed inset-0 z-20 min-h-screen min-w-screen flex justify-center items-center">
+          <article className="bg-zinc-800 p-6 flex flex-col gap-5 rounded-lg">
+            <article className="flex flex-row justify-between">
+              <h2 className="text-lg ">프로필 세부 정보</h2>
+              <button
+                type="button"
+                onClick={() => setProfileSettingModal(false)}
+                className="text-2xl"
+              >
+                <IoIosClose />
+              </button>
+            </article>
+            <article className="w-full flex flex-row items-center gap-5">
+              <figure className="w-[180px] h-[180px] flex justify-center items-center text-7xl text-zinc-500 bg-zinc-800 shadow-zinc-900 shadow-lg rounded-full">
+                <HiMiniUser />
+              </figure>
+              <article className="w-[220px]flex flex-col justify-center">
+                <form className="flex flex-col justify-end items-end gap-2">
+                  <input
+                    type="text"
+                    className="bg-zinc-700 w-[280px] py-2 rounded-sm"
+                  />
+                  <button className="bg-white py-3 px-8 rounded-full text-charcoal font-bold">
+                    저장하기
+                  </button>
+                </form>
+              </article>
+            </article>
+          </article>
+        </section>
+      ) : null}
+      <AlbumList albumData={catData} albumListName={"좋아요한 곡"} />
+      <AlbumList albumData={catData} albumListName={"나만의 플레이리스트"} />
+    </main>
+  );
+}
+
+export default ProfilePage;
 
 export const catData: album[] = [
   {
@@ -49,50 +141,3 @@ export const catData: album[] = [
     image: "/../../public/cat.jpeg",
   },
 ];
-
-function ProfilePage() {
-  const [toggle, setToggle] = useState(false);
-
-  const handleSettingToggle = () => {
-    setToggle(!toggle);
-  };
-
-  return (
-    <main className=" bg-zinc-950 rounded-2xl m-6 min-h-screen pb-10">
-      <section className="w-full h-[250px] bg-gradient-to-b from-zinc-600 to-zinc-800 rounded-t-2xl flex flex-row items-center mb-8">
-        <figure className="w-[200px] h-[200px] flex justify-center items-center text-7xl text-zinc-500 bg-zinc-800 drop-shadow-md rounded-full ml-10">
-          <HiMiniUser />{" "}
-          {/* 여기에 useState를 사용해서 사용자 프로필 사진 반환 */}
-        </figure>
-        <section className="text-white ml-10">
-          <p className="text-[14px]">프로필</p>
-          <h1 className="text-7xl font-black mt-3">sm</h1>
-          <p className="text-[14px] font-normal mt-2">좋아요한 앨범 수 개</p>
-        </section>
-      </section>
-      <button
-        type="button"
-        onClick={handleSettingToggle}
-        className=" hover:cursor-pointer"
-      >
-        <AiOutlineEllipsis className="text-zinc-400 text-4xl ml-10 hover:text-zinc-100" />
-      </button>
-      {toggle ? (
-        <section className="absolute z-10 w-[160px] h-[100px] bg-zinc-800 rounded-md ml-10 text-left text-white p-1">
-          <p className="h-1/2 flex items-center pl-3 gap-3 hover:bg-zinc-700">
-            <FaPen />
-            프로필 수정
-          </p>
-          <p className="h-1/2 flex items-center pl-3 gap-3 hover:bg-zinc-700">
-            <RiFileCopyLine />
-            프로필 링크 복사
-          </p>
-        </section>
-      ) : null}
-      <AlbumList albumData={catData} albumListName={"좋아요한 곡"} />
-      <AlbumList albumData={catData} albumListName={"나만의 플레이리스트"} />
-    </main>
-  );
-}
-
-export default ProfilePage;
