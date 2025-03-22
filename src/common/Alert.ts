@@ -28,7 +28,7 @@ export const AlertInfo = (title = "Info", text = "") => {
   });
 };
 
-export const AlertConfirm = Swal.fire({
+export const AlertResult = Swal.fire({
   title: "정말 삭제하시겠습니까?",
   text: "삭제한 후에는 복구가 불가능합니다",
   icon: "warning",
