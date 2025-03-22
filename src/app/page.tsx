@@ -1,38 +1,23 @@
+import AlbumList from "@/components/AlbumList";
+import { catData } from "./(pages)/profile/page";
+import { album } from "@/types/album";
+
 export default function Home() {
+  const albumData: album[] = catData;
   return (
     <section className="p-5 flex flex-col gap-4">
       <article>
-        <p className="text-2xl font-bold">인기 순위</p>
-        <div className="flex flex-row w-full h-1/4 rounded-xl p-4 justify-between gap-4">
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-        </div>
+        <AlbumList albumdata={albumData} />
       </article>
       <article>
         <p className="text-2xl font-bold">카테고리 1</p>
-        <div className="flex flex-row w-full h-1/4 rounded-xl p-4 justify-between gap-4">
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-        </div>
+        {/* 추후 삭제될 태그 */}
+        <AlbumList albumdata={albumData} />
       </article>
       <article>
         <p className="text-2xl font-bold">카테고리 2</p>
-        <div className="flex flex-row w-full h-1/4 rounded-xl p-4 justify-between gap-4">
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-        </div>
+        {/* 추후 삭제될 태그 */}
+        <AlbumList albumdata={albumData} />
       </article>
     </section>
   );
