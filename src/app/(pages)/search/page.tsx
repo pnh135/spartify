@@ -22,7 +22,7 @@ function SearchPage() {
           {Array.from({ length: 20 }, (_, index) => (
             <div
               key={index}
-              className="w-[200px] h-[200px] bg-white text-black flex items-center justify-center flex-shrink-0 p-4 m-2"
+              className="w-[180px] h-[180px] bg-white text-black flex items-center justify-center flex-shrink-0 p-4 m-2"
             >
               앨범 {index + 1}
             </div>
@@ -31,11 +31,11 @@ function SearchPage() {
       </section>
       <section>
         <span className="font-bold text-2xl p-4">연관 앨범</span>
-        <div className="flex gap-4 overflow-x-auto overflow-hidden whitespace-nowrap scroll-smooth p-4 hide-scrollbar">
+        <div className="flex gap-4 overflow-x-auto overflow-hidden whitespace-nowrap scroll-smooth m-3 flex-shrink-0 hide-scrollbar">
           {Array.from({ length: 20 }, (_, index) => (
             <div
               key={index}
-              className="w-[150px] h-[150px] bg-white text-black flex items-center justify-center flex-shrink-0 m-3"
+              className="w-[180px] h-[180px] bg-white text-black flex items-center justify-center flex-shrink-0 m-3"
             >
               앨범 {index + 1}
             </div>
