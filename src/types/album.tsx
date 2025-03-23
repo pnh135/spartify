@@ -5,6 +5,8 @@ export type album = {
 };
 
 export type SpotifyAlbum = {
+  id: string;
+  release_date: string;
   name: string;
   images: {
     url: string;
