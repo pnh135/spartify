@@ -44,7 +44,13 @@ export async function getNewRelease(): Promise<SpotifyAlbum[]> {
       },
     );
     const data = await res.json();
+    if (!data.albums || !data.albums.items) {
+      console.log(data);
+      return [];
+    }
     const newReleaseAlbum: SpotifyAlbum[] = data.albums.items;
+
+    console.log(newReleaseAlbum);
     return newReleaseAlbum;
   } catch (error) {
     console.log(error);
