@@ -9,7 +9,7 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-  const handleLogin = async e => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const { user, error } = await authLogin(email, password);
@@ -37,20 +37,18 @@ function LoginPage() {
             Google로 계속하기
           </button>
 
-          {/* 구분선 */}
-          <div className="w-full border-t border-gray-700"></div>
-
-          {/* 아이디 인풋 태그 */}
-          <div className="w-full">
-            <label className="block text-offwhite text-sm mb-1">이메일</label>
-            <input
-              type="email"
-              className="w-full bg-gunmetal text-offwhite border border-offwhite rounded py-2 px-3"
-              placeholder="이메일 또는 사용자 이름"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-            />
-          </div>
+        {/* 구분선 */}
+        <div className="w-full border-t border-gray-700"></div>
+ 
+        {/* 아이디 인풋 태그 */}
+        <div className="w-full">
+          <label className="block text-offwhite text-sm mb-1">이메일</label>
+          <input
+            type="email"
+            className="w-full bg-gunmetal text-offwhite border border-offwhite rounded py-2 px-3"
+            placeholder="이메일 또는 사용자 이름"
+          />
+        </div>
 
           {/* 패스워드 인풋 태그 */}
           <div className="w-full">
@@ -60,7 +58,7 @@ function LoginPage() {
               className="w-full bg-gunmetal text-offwhite border border-offwhite rounded py-2 px-3"
               placeholder="비밀번호"
               value={password}
-              onChange={e => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
