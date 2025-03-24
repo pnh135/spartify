@@ -12,8 +12,8 @@ export type SignUpCredentials = AuthCredentials & {
 export type AuthResponse = {
   user: User | null;
   session: Session | null;
-  error: string | null;
   weakPassword?: WeakPassword;
+  error: string | null;
 };
 
 export type Provider = "google" | "spotify" | string;

@@ -9,8 +9,8 @@ import { HiMiniUser } from "react-icons/hi2";
 import { IoIosClose } from "react-icons/io";
 import AlbumList from "../../../components/AlbumList";
 import type { album } from "../../../types/album";
-// import { supabase } from "../../../utils/supabaseClient";
-import { supabase } from "@/app/api/supabase/supabase";
+import { supabase } from "../../api/supabase/supabase";
+
 //   주석달기
 
 function ProfilePage() {
@@ -21,7 +21,7 @@ function ProfilePage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data, error } = await supabase.from("users").select("name");
+        const { data, error } = await supabase.from("users").select("*");
         if (error) {
           console.log("error =>", error);
         } else {
