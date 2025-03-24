@@ -6,8 +6,6 @@ import Image from "next/image";
 export default async function Home() {
   const newRelease = await getNewRelease();
 
-  console.log(newRelease);
-
   return (
     <section className="p-5 flex flex-col gap-4">
       <section>
