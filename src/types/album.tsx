@@ -4,7 +4,7 @@ export type album = {
   image: string;
 };
 
-export type SpotifyAlbum = {
+export interface SpotifyAlbum {
   id: string;
   release_date: string;
   name: string;
@@ -25,4 +25,4 @@ export type SpotifyAlbum = {
       preview_url: string | null;
     }[];
   };
-};
+}

@@ -119,7 +119,7 @@ function AlbumDetailPage() {
           <p className="mx-auto">song 5</p>
         </li>
       </section>
-      <AlbumList albumdata={catData} />
+      <AlbumList albumData={catData} />
     </main>
   );
 }

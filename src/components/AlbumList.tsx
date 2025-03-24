@@ -5,7 +5,7 @@ import { MdOutlinePlayCircleFilled } from "react-icons/md";
 
 interface AlbumListProps {
   albumData: album[];
-  albumListName: string;
+  albumListName?: string;
 }
 
 export default function AlbumList({
