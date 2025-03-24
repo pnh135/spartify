@@ -8,6 +8,33 @@ const publicAuth = Buffer.from(`${clientId}:${clientSecret}`).toString(
   "base64",
 );
 
+export async function refreshPublicAccessToken(): Promise<void> {
+  const refreshToken = localStorage.getItem("refresh_token");
+  if (!refreshToken) {
+    throw new Error("refresh token이 없습니다");
+  }
+
+  const payload = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({
+      grant_type: "refresh_token",
+      refresh_token: refreshToken,
+      client_id: clientId,
+    }),
+  };
+
+  const res = await fetch(APP_TOKEN_URL, payload);
+  const data = await res.json();
+
+  localStorage.setItem("access_token", data.access_token);
+  if (data.refresh_token) {
+    localStorage.setItem("refresh_token", data.refresh_token);
+  }
+}
+
 export async function getPublicAccessToken(): Promise<string> {
   const res = await fetch(APP_TOKEN_URL, {
     method: "POST",
@@ -44,7 +71,12 @@ export async function getNewRelease(): Promise<SpotifyAlbum[]> {
       },
     );
     const data = await res.json();
+    if (!data.albums?.items) {
+      console.error("Spotify API 응답 오류:", data);
+      return [];
+    }
     const newReleaseAlbum: SpotifyAlbum[] = data.albums.items;
+
     return newReleaseAlbum;
   } catch (error) {
     console.log(error);

@@ -66,7 +66,7 @@ export type Database = {
       users: {
         Row: {
           created_at: string;
-          emails: string | null;
+          email: string | null;
           id: number;
           name: string | null;
           profile_images: string | null;
@@ -74,7 +74,7 @@ export type Database = {
         };
         Insert: {
           created_at?: string;
-          emails?: string | null;
+          email?: string | null;
           id?: number;
           name?: string | null;
           profile_images?: string | null;
@@ -82,7 +82,7 @@ export type Database = {
         };
         Update: {
           created_at?: string;
-          emails?: string | null;
+          email?: string | null;
           id?: number;
           name?: string | null;
           profile_images?: string | null;
