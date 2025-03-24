@@ -1,8 +1,5 @@
 import { getNewRelease } from "./api/spotify/token/route";
 import Image from "next/image";
-// import AlbumList from "@/components/AlbumList";
-// import { catData } from "./(pages)/profile/page";
-
 export default async function Home() {
   const newRelease = await getNewRelease();
 
