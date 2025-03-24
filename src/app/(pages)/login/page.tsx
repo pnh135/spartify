@@ -10,9 +10,11 @@ function LoginPage() {
 
   const handleLogin = async () => {
     try {
-      const { error } = await authLogin(email, password);
+      const { user, error } = await authLogin(email, password);
+
+      console.log(user);
       if (error) throw error;
-      alert("로그인 성공");
+      alert(`환영합니다, ${user?.email}`);
       router.push("/");
     } catch (error) {
       console.log(error);
