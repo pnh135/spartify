@@ -11,6 +11,7 @@ import AlbumList from "../../../components/AlbumList";
 import type { album } from "../../../types/album";
 import { supabase } from "@/app/api/supabase/supabase";
 
+
 //   주석달기
 
 function ProfilePage() {
@@ -21,7 +22,7 @@ function ProfilePage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data, error } = await supabase.from("users").select("name");
+        const { data, error } = await supabase.from("users").select("*");
         if (error) {
           console.log("error =>", error);
         } else {
