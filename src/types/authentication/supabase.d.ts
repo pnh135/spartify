@@ -66,26 +66,23 @@ export type Database = {
       users: {
         Row: {
           created_at: string;
-          emails: string | null;
-          id: number;
-          name: string | null;
-          profile_images: string | null;
+          email: string | null;
+          name: string | never;
+          profile_img: string | null;
           user_id: string | null;
         };
         Insert: {
           created_at?: string;
-          emails?: string | null;
-          id?: number;
+          email?: string | null;
           name?: string | null;
-          profile_images?: string | null;
+          profile_img?: string | null;
           user_id?: string | null;
         };
         Update: {
           created_at?: string;
-          emails?: string | null;
-          id?: number;
+          email?: string | null;
           name?: string | null;
-          profile_images?: string | null;
+          profile_img?: string | null;
           user_id?: string | null;
         };
         Relationships: [];
