@@ -67,25 +67,22 @@ export type Database = {
         Row: {
           created_at: string;
           email: string | null;
-          id: number;
-          name: string | null;
-          profile_images: string | null;
+          name: string | never;
+          profile_img: string | null;
           user_id: string | null;
         };
         Insert: {
           created_at?: string;
           email?: string | null;
-          id?: number;
           name?: string | null;
-          profile_images?: string | null;
+          profile_img?: string | null;
           user_id?: string | null;
         };
         Update: {
           created_at?: string;
           email?: string | null;
-          id?: number;
           name?: string | null;
-          profile_images?: string | null;
+          profile_img?: string | null;
           user_id?: string | null;
         };
         Relationships: [];
