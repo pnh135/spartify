@@ -122,8 +122,8 @@ async function AlbumDetailPage({ params }: { params: { id: string } }) {
           </div>
           <p className="mx-auto">song 5</p>
         </li>
-      </section>
-      <AlbumList albumData={catData} />
+      </section> */}
+      {/* <AlbumList albumdata={catData} /> */}
     </main>
   );
 }
