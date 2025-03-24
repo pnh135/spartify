@@ -21,8 +21,8 @@ export default function AlbumList({
             return (
               <Link
                 key={album.id}
-                href={`/detail/${album.id}`}
-                className="w-[180px] flex-shrink-0 overflow-hidden"
+                href={`/album/${album.id}`}
+                className="w-[200px] flex-shrink-0 overflow-hidden"
               >
                 <article className="text-white hover:bg-zinc-800 p-3 rounded-md group">
                   <figure className="w-[180px] h-[180px] overflow-hidden mb-2 rounded-md relative">

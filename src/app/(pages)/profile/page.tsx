@@ -8,6 +8,7 @@ import { RiFileCopyLine } from "react-icons/ri";
 import { HiMiniUser } from "react-icons/hi2";
 import AlbumList from "../../../components/AlbumList";
 import type { album } from "../../../types/album";
+import { getNewRelease } from "@/app/api/spotify/token/route";
 
 //   주석달기
 // 앨범 컴포넌트 Link태그로 감싸서 디테일 창으로 넘기기
@@ -57,6 +58,8 @@ function ProfilePage() {
     setToggle(!toggle);
   };
 
+  const newRelease = getNewRelease();
+
   return (
     <main className=" bg-zinc-950 rounded-2xl m-6 min-h-screen pb-10">
       <section className="w-full h-[250px] bg-gradient-to-b from-zinc-600 to-zinc-800 rounded-t-2xl flex flex-row items-center mb-8">
@@ -89,8 +92,8 @@ function ProfilePage() {
           </p>
         </section>
       ) : null}
-      <AlbumList albumData={catData} albumListName={"좋아요한 곡"} />
-      <AlbumList albumData={catData} albumListName={"나만의 플레이리스트"} />
+      <AlbumList albumData={newRelease} albumListName={"좋아요한 곡"} />
+      <AlbumList albumData={newRelease} albumListName={"나만의 플레이리스트"} />
     </main>
   );
 }
