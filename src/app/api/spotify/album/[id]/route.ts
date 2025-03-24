@@ -8,14 +8,18 @@ const clientId = process.env.SPOTIFY_CLIENT_ID!;
 const clientSecret = process.env.SPOTIFY_CLIENT_SECRET!;
 const basicAuth = Buffer.from(`${clientId}:${clientSecret}`).toString("base64");
 
-const PUBLIC_TOKEN_URL='https://accounts.spotify.com/api/token'
+const PUBLIC_TOKEN_URL = "https://accounts.spotify.com/api/token";
 
-export async function getPublicAccessToken(){
-  const res=await fetch(PUBLIC_TOKEN_URL,{
-    method:"POST",
-    headers:{
-      Authorization:`Basic ${basicAuth}`,
-      "Content-Type":'applicatiobn'
-    }
-  })
+export async function getPublicAccessToken() {
+  const res = await fetch(PUBLIC_TOKEN_URL, {
+    method: "POST",
+    headers: {
+      Authorization: `Basic ${basicAuth}`,
+      "Content-Type": "applicatiobn",
+    },
+  });
+
+  const data = await res.json();
+  console.log(data);
+  return data.access_token;
 }
