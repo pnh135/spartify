@@ -5,9 +5,9 @@ export default async function Home() {
 
   return (
     <section className="p-5 flex flex-col gap-4">
-      <section>
+      <article>
         <AlbumList albumListName={"최신 앨범"} albumData={newRelease} />
-      </section>
+      </article>
       <article>
         <AlbumList albumListName={"카테고리 1"} albumData={newRelease} />
       </article>
