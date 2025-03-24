@@ -21,7 +21,7 @@ export default function AlbumList({
             return (
               <Link
                 key={album.id}
-                href={`/album/${album.id}`}
+                href={`/detail/${album.id}`}
                 className="w-[200px] flex-shrink-0 overflow-hidden"
               >
                 <article className="text-white hover:bg-zinc-800 p-3 rounded-md group">
