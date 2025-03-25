@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
-import { SpotifyAlbum } from "@/types/album";
+// import { NextResponse } from "next/server";
+// import { SpotifyAlbum } from "@/types/album";
 const APP_TOKEN_URL = "https://accounts.spotify.com/api/token";
 const clientId = process.env.SPOTIFY_CLIENT_ID!;
 const clientSecret = process.env.SPOTIFY_CLIENT_SECRET!;
@@ -22,14 +22,14 @@ export async function getPublicAccessToken(): Promise<string> {
   return data.access_token;
 }
 
-export async function GET() {
-  try {
-    const token = await getPublicAccessToken();
-    return NextResponse.json({ access_token: token });
-  } catch (error) {
-    console.log(error);
-  }
-}
+// export async function GET() {
+//   try {
+//     const token = await getPublicAccessToken();
+//     return NextResponse.json({ access_token: token });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
 
 // export async function getNewRelease(): Promise<SpotifyAlbum[]> {
 //   try {
@@ -51,47 +51,32 @@ export async function GET() {
 //     return [];
 //   }
 // }
-export async function getNewRelease(): Promise<SpotifyAlbum[]> {
-  try {
-    const accessToken = await getPublicAccessToken();
-
-    console.log("📡 Spotify API 호출 시작");
-    const res = await fetch(
-      "https://api.spotify.com/v1/browse/new-releases?limit=20",
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
+export async function getNewRelease() {
+  const accessToken = await getPublicAccessToken();
+  const res = await fetch(
+    "https://api.spotify.com/v1/browse/new-releases?limit=20",
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
       },
-    );
+    },
+  );
 
-    if (res.status !== 200) {
-      const errorData = await res.json();
-      console.log(errorData);
-      return [];
-    }
+  if (!res.ok) throw new Error("Failed to fetch new releases");
 
-    const data = await res.json();
-    return data.albums.items;
-  } catch (error) {
-    console.log(error);
-    return [];
-  }
+  const data = await res.json();
+  return data.albums.items;
 }
-export async function getAlbum(id: string): Promise<SpotifyAlbum> {
+
+export async function getAlbum(id: string) {
   const accessToken = await getPublicAccessToken();
   const res = await fetch(`https://api.spotify.com/v1/albums/${id}`, {
-    cache: "no-store",
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
   });
 
-  // if (res.status !== 200) {
-  //   const errorData = await res.json();
-  //   console.error(errorData);
-  //   return ;
-  // }
-  const data = await res.json();
-  return data;
+  if (!res.ok) throw new Error("Failed to fetch album");
+
+  return res.json();
 }
