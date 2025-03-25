@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { SpotifyAlbum } from "@/types/album";
+import { NextApiRequest, NextApiResponse } from "next";
 const APP_TOKEN_URL = "https://accounts.spotify.com/api/token";
 
 const clientId = process.env.SPOTIFY_CLIENT_ID!;
@@ -99,6 +100,38 @@ export async function getSearchResults({ searchData }: { searchData: string }) {
     }
     const searchResults: SpotifyAlbum[] = data.albums.items;
     return searchResults;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const searchSpotify = async (query: string, accessToken: string) => {
+  const response = await fetch(
+    `https://api.spotify.com/v1/search?q=${encodeURIComponent(
+      query,
+    )}&type=track,album,artist&limit=10`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    },
+  );
+
+  const data = await response.json();
+  return data;
+};
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
+  try {
+    const query = req.query.query as string;
+    const accessToken = await getPublicAccessToken();
+    const searchResults = await searchSpotify(query, accessToken);
+
+    res.status(200).json(searchResults);
   } catch (error) {
     console.log(error);
   }

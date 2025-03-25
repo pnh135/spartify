@@ -1,5 +1,6 @@
 import AlbumList from "@/components/AlbumList";
 import { getNewRelease } from "./api/spotify/token/route";
+import SearchBar from "@/components/SearchBar";
 export default async function Home() {
   const newRelease = await getNewRelease();
 
@@ -14,6 +15,7 @@ export default async function Home() {
       <article>
         <AlbumList albumListName={"카테고리 2"} albumData={newRelease} />
       </article>
+      <SearchBar />
     </section>
   );
 }
