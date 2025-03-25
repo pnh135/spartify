@@ -13,7 +13,6 @@ type LikeBtnProps = {
 const LikeBtn = ({ albumId }: LikeBtnProps) => {
   //zustand에서 유저 정보 가져오기
   const { user } = useUserStore();
-  console.log("user!!!", user);
   const userId = user?.id;
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState<number>(0);
@@ -43,12 +42,7 @@ const LikeBtn = ({ albumId }: LikeBtnProps) => {
           album_id: albumId,
         })
         .single();
-      if (error) {
-        console.error("좋아요 추가 실패임?:", error);
-        throw error;
-      }
-
-      console.log("좋아요 추가된거 맞음???/:", data);
+      if (error) throw error;
     },
     onSuccess: () => setLikeCount(prev => prev + 1),
   });
@@ -61,12 +55,11 @@ const LikeBtn = ({ albumId }: LikeBtnProps) => {
         .delete()
         .match({ user_id: userId, album_id: albumId });
     },
-    onSuccess: () => setLikeCount(prev => prev - 1),
+    onSuccess: () => setLikeCount(prev => (prev > 0 ? prev - 1 : 0)),
   });
 
   //좋아요 업데이트
   useEffect(() => {
-    console.log("여기다######", data);
     if (data) {
       const userLiked = data.find(item => item.user_id === userId);
       setLiked(!!userLiked);
