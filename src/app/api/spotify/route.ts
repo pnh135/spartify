@@ -19,8 +19,6 @@ export async function getPublicAccessToken(): Promise<string> {
   });
 
   const data = await res.json();
-  console.log("🔐 새로 발급된 토큰:", data.access_token);
-  console.log("⏳ 만료 시간 (초):", data.expires_in);
   return data.access_token;
 }
 
@@ -67,18 +65,33 @@ export async function getNewRelease(): Promise<SpotifyAlbum[]> {
       },
     );
 
-    console.log("🎯 응답 상태 코드:", res.status);
-
     if (res.status !== 200) {
       const errorData = await res.json();
-      console.error("🚨 Spotify API 에러:", errorData);
+      console.log(errorData);
       return [];
     }
 
     const data = await res.json();
     return data.albums.items;
   } catch (error) {
-    console.error("🔥 예외 발생:", error);
+    console.log(error);
     return [];
   }
+}
+export async function getAlbum(id: string): Promise<SpotifyAlbum> {
+  const accessToken = await getPublicAccessToken();
+  const res = await fetch(`https://api.spotify.com/v1/albums/${id}`, {
+    cache: "no-store",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  // if (res.status !== 200) {
+  //   const errorData = await res.json();
+  //   console.error(errorData);
+  //   return ;
+  // }
+  const data = await res.json();
+  return data;
 }

@@ -47,35 +47,6 @@ export const authSignUp = async (
       session: data.session,
       error: null,
     };
-    if (error || !data.user) {
-      return {
-        user: null,
-        session: null,
-        error: error?.message || "회원가입 실패",
-      };
-    }
-
-    // 2단계: public.users 테이블에 추가 정보 저장
-    const profile: TablesInsert<"users"> = {
-      user_id: data.user.id,
-      email: email,
-      name: nickName,
-      created_at: new Date().toISOString(),
-    };
-
-    const { error: profileError } = await supabase
-      .from("users")
-      .insert(profile);
-
-    if (profileError) {
-      return { user: null, session: null, error: profileError.message };
-    }
-
-    return {
-      user: data.user,
-      session: data.session,
-      error: null,
-    };
   } catch (error: unknown) {
     const errorMessage =
       error instanceof Error ? error.message : "알 수 없는 오류";
