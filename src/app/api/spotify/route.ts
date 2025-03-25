@@ -80,3 +80,20 @@ export async function getAlbum(id: string) {
 
   return res.json();
 }
+
+export async function getSeveralArtist(
+  artistsId: string[],
+  accessToken: string,
+) {
+  const res = await fetch(
+    `https://api.spotify.com/v1/artists?ids=${artistsId.join(",")}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    },
+  );
+
+  const data = await res.json();
+  return data;
+}
