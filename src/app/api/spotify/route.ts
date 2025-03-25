@@ -80,7 +80,7 @@ export async function getArtist(id: string) {
   return res.json();
 }
 
-export async function getAritstAlbum(id:string){
-  const accessToken=await getPublicAccessToken();
-  const res=await fetch(`https://api.spotify.com/`)
-}
+// export async function getAritstAlbum(id:string){
+//   const accessToken=await getPublicAccessToken();
+//   const res=await fetch(`https://api.spotify.com/`)
+// }
