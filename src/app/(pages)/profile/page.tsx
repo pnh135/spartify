@@ -45,6 +45,7 @@ function ProfilePage() {
     setOptionToggle(false);
   };
 
+  // 수퍼베이스 유저 정보 갸져오기
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user-storage"));
     if (userData.state.user.user_metadata) {
@@ -60,6 +61,13 @@ function ProfilePage() {
     localStorage.setItem("user-storage", JSON.stringify(updatedUser));
     setUser(updatedUser);
   };
+
+  // 수퍼베이스 유저 정보 업데이트
+  useEffect(() => {
+    const { data, error } = await supabase
+      .from("your_table")
+      .upsert({ id: user.id, column_name: "value" }, { onConflict: "id" });
+  });
 
   return (
     <main className="bg-zinc-950 rounded-2xl m-6 min-h-screen pb-10">
@@ -135,7 +143,10 @@ function ProfilePage() {
                 </article>
               </figure>
               <article className="w-[220px] flex flex-col justify-center">
-                <form className="flex flex-col justify-end items-end gap-3">
+                <form
+                  onSubmit={() => userDataUpdate()}
+                  className="flex flex-col justify-end items-end gap-3"
+                >
                   <label className="flex flex-col">
                     아이디
                     <input
@@ -155,8 +166,7 @@ function ProfilePage() {
                     />
                   </label>
                   <button
-                    type="button"
-                    onClick={() => userDataUpdate()}
+                    type="submit"
                     className="bg-white py-2 px-8 rounded-full text-charcoal font-bold"
                   >
                     저장하기
