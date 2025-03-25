@@ -1,4 +1,7 @@
 // import { NextResponse } from "next/server";
+
+import { SpotifyAlbum } from "@/types/album";
+
 // import { SpotifyAlbum } from "@/types/album";
 const APP_TOKEN_URL = "https://accounts.spotify.com/api/token";
 const clientId = process.env.SPOTIFY_CLIENT_ID!;
@@ -68,7 +71,7 @@ export async function getNewRelease() {
   return data.albums.items;
 }
 
-export async function getAlbum(id: string) {
+export async function getAlbum(id: string): Promise<SpotifyAlbum> {
   const accessToken = await getPublicAccessToken();
   const res = await fetch(`https://api.spotify.com/v1/albums/${id}`, {
     headers: {
