@@ -1,7 +1,5 @@
 import React from "react";
-// import AlbumList from "@/components/AlbumList";
 import Image from "next/image";
-// import { SpotifyAlbum } from "@/types/album";
 import { getAlbum } from "@/app/api/spotify/route";
 
 async function AlbumDetailPage({ params }: { params: { id: string } }) {
