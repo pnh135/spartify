@@ -83,3 +83,23 @@ export async function getNewRelease(): Promise<SpotifyAlbum[]> {
     return [];
   }
 }
+
+export async function getSearchResults({ searchData }: { searchData: string }) {
+  try {
+    const accessToken = await getPublicAccessToken();
+    const res = await fetch(`https://api.spotify.com/v1/search?${searchData}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    const data = await res.json();
+    if (!data.albums?.items) {
+      console.error("Spotify API 응답 오류:", data);
+      return [];
+    }
+    const searchResults: SpotifyAlbum[] = data.albums.items;
+    return searchResults;
+  } catch (error) {
+    console.log(error);
+  }
+}
