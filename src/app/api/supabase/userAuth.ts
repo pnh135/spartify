@@ -8,7 +8,7 @@ export const authSignUp = async (
   nickName: string,
 ): Promise<AuthResponse> => {
   try {
-    // 1단계: Supabase Auth에 회원 등록
+
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -27,36 +27,6 @@ export const authSignUp = async (
       };
     }
 
-    // 2단계: public.users 테이블에 추가 정보 저장
-    const profile: TablesInsert<"users"> = {
-      user_id: data.user.id,
-      email: email,
-      name: nickName,
-      created_at: new Date().toISOString(),
-    };
-
-    const { error: profileError } = await supabase
-      .from("users")
-      .insert(profile);
-
-    if (profileError) {
-      return { user: null, session: null, error: profileError.message };
-    }
-
-    return {
-      user: data.user,
-      session: data.session,
-      error: null,
-    };
-    if (error || !data.user) {
-      return {
-        user: null,
-        session: null,
-        error: error?.message || "회원가입 실패",
-      };
-    }
-
-    // 2단계: public.users 테이블에 추가 정보 저장
     const profile: TablesInsert<"users"> = {
       user_id: data.user.id,
       email: email,
