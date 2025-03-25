@@ -4,6 +4,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { authSignUp } from "@/app/api/supabase/userAuth";
 import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,22 +13,47 @@ function SignupPage() {
 
   const handleSignUp = async () => {
     if (!email || !password || !nickname) {
-      alert("모든 필드를 입력해주세요.");
+      Swal.fire({
+        title: "입력 오류",
+        text: "모든 필드를 입력해주세요.",
+        icon: "warning",
+        confirmButtonColor: "#f8c471",
+        confirmButtonText: "확인",
+      });
       return;
     }
 
     try {
       const { error } = await authSignUp(email, password, nickname);
-
+      console.log(error);
       if (error) {
-        alert(`회원가입 실패: ${error}`);
+        Swal.fire({
+          title: "회원가입 실패",
+          text: error.message || "회원가입 중 오류가 발생했습니다.",
+          icon: "error",
+          confirmButtonColor: "#d33",
+          confirmButtonText: "확인",
+        });
         return;
       }
 
-      alert("회원가입 완료! 이메일 인증 후 로그인하세요.");
+      await Swal.fire({
+        title: "회원가입 완료!",
+        text: "이메일 인증 후 로그인해주세요.",
+        icon: "success",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "확인",
+      });
       router.push("/login");
+
     } catch (error: any) {
-      alert(error.message || "회원가입 중 오류가 발생했습니다.");
+       Swal.fire({
+        title: "오류 발생",
+        text: error.message || "알 수 없는 오류가 발생했습니다.",
+        icon: "error",
+        confirmButtonColor: "#d33",
+        confirmButtonText: "확인",
+      });
     }
   };
   return (
