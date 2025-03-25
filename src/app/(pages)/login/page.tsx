@@ -3,18 +3,26 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { authLogin } from "@/app/api/supabase/userAuth";
 import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-  const handleLogin = async e => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const { user, error } = await authLogin(email, password);
+      console.log(user);
 
       if (error) throw error;
-      alert(`환영합니다, ${user?.email}`);
+      await Swal.fire({
+        title: "로그인 성공!",
+        text: `${user?.user_metadata.name}님, 환영합니다!`,
+        icon: "success",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "확인",
+      });
       router.push("/");
     } catch (error) {
       console.log(error);
