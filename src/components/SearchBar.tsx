@@ -6,20 +6,29 @@ import { SpotifySearch } from "@/types/album";
 import { useState } from "react";
 
 const SearchBar = () => {
-  const [query, setQuery] = useState("");
+  const [searchData, setSearchData] = useState("");
   const [results, setResults] = useState<SpotifySearch[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const handleSearch = async () => {
-    if (!query) return;
+  const getSearch = async e => {
+    e.preventDefault();
+    if (!searchData) return;
 
     setLoading(true);
 
     try {
-      const res = await fetch(`/api/spotifySearch?query=${query}`);
+      const res = await fetch(
+        `https://api.spotify.com/v1/search?q=${searchData}&type=album`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + `${token}`,
+          },
+        },
+      );
       const data = await res.json();
       setResults(data);
-      console.log(data); // 검색 결과 중 트랙을 추출
+      console.log(data);
     } catch (error) {
       console.error("Failed to fetch search results", error);
     }
@@ -29,16 +38,18 @@ const SearchBar = () => {
 
   return (
     <div>
-      <input
-        type="text"
-        value={query}
-        onChange={e => setQuery(e.target.value)}
-        placeholder="Search for music..."
-        className="text-slate-950"
-      />
-      <button onClick={handleSearch} disabled={loading}>
-        {loading ? "Searching..." : "Search"}
-      </button>
+      <form onSubmit={e => getSearch(e)}>
+        <input
+          type="text"
+          value={searchData}
+          onChange={e => setSearchData(e.target.value)}
+          placeholder="What do you want to play?"
+          className="bg-gunmetal border border-transparent rounded-full h-10 px-10 focus:ring-2 focus:ring-inset focus:ring-gray-600 focus:outline-none hidden md:block"
+        />
+        <button type="submit" disabled={loading}>
+          {loading ? "Searching..." : "Search"}
+        </button>
+      </form>
 
       <ul>
         <div>결과가 나올 페이지</div>

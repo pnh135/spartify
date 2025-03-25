@@ -15,7 +15,6 @@ export default async function Home() {
   const artistIds: string[] = albums.map(album => album.artists[0].id);
   const artists = await getSeveralArtist(artistIds, token);
 
-  console.log(albums);
   return (
     <section className="p-2 flex flex-col gap-4">
       <article>
