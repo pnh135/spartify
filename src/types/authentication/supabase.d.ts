@@ -77,7 +77,7 @@ export type Database = {
           email?: string | null;
           id?: number;
           name?: string | null;
-          profile_images?: string | null;
+          profile_img?: string | null;
           user_id?: string | null;
         };
         Update: {
@@ -85,7 +85,7 @@ export type Database = {
           email?: string | null;
           id?: number;
           name?: string | null;
-          profile_images?: string | null;
+          profile_img?: string | null;
           user_id?: string | null;
         };
         Relationships: [];

@@ -1,14 +1,15 @@
+import AlbumList from "@/components/AlbumList";
 import { getNewRelease } from "./api/spotify/route";
 import Image from "next/image";
 export default async function Home() {
-  const albums = await getNewRelease();
+  const newRelease = await getNewRelease();
 
   return (
     <section className="p-5 flex flex-col gap-4">
       <section>
         <span className="font-bold text-2xl p-4">최신 앨범</span>
         <div className="flex gap-4 overflow-x-auto whitespace-nowrap scroll-smooth p-4 hide-scrollbar">
-          {albums.map(album => (
+          {newRelease.map(album => (
             <div
               key={album.id}
               className="w-40 flex-shrink-0 rounded-md overflow-hidden"
@@ -30,29 +31,12 @@ export default async function Home() {
           ))}
         </div>
       </section>
+
       <article>
-        <p className="text-2xl font-bold">카테고리 1</p>
-        <div className="flex flex-row w-full h-1/4 rounded-xl p-4 justify-between gap-4">
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-        </div>
+        <AlbumList albumListName={"카테고리 1"} albumData={newRelease} />
       </article>
       <article>
-        <p className="text-2xl font-bold">카테고리 2</p>
-        {/* 추후 삭제될 태그 */}
-        {/* <AlbumList albumData={catData} albumListName={"카테고리2"} /> */}
-        <div className="flex flex-row w-full h-1/4 rounded-xl p-4 justify-between gap-4">
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-          <div className="w-40 h-40 rounded-md bg-white"></div>
-        </div>
+        <AlbumList albumListName={"카테고리 2"} albumData={newRelease} />
       </article>
     </section>
   );
