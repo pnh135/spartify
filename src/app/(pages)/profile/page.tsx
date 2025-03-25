@@ -10,19 +10,21 @@ import AlbumList from "../../../components/AlbumList";
 import { getNewRelease } from "@/utils/fetchNewRelease";
 //   주석달기
 
+interface userType {
+  email: string;
+  email_verified: boolean;
+  name: string;
+  phone_verified: boolean;
+  sub: string;
+}
+
 function ProfilePage() {
   const [optionToggle, setOptionToggle] = useState(false);
   const [profileSettingModal, setProfileSettingModal] = useState(false);
   const [newRelease, setNewRelease] = useState([]);
-  const [user, setUser] = useState({});
-
-  interface userType {
-    email: string;
-    email_verified: boolean;
-    name: string;
-    phone_verified: boolean;
-    sub: string;
-  }
+  const [user, setUser] = useState<userType>({});
+  const [email, setEmail] = useState("");
+  const [nickname, setNickname] = useState("");
 
   useEffect(() => {
     const gotfetchApiData = async () => {
@@ -52,11 +54,18 @@ function ProfilePage() {
     }
   }, []);
 
+  const userDataUpdate = () => {
+    const updatedUser = { ...user, name: nickname, email: email };
+
+    localStorage.setItem("user-storage", JSON.stringify(updatedUser));
+    setUser(updatedUser);
+  };
+
   return (
     <main className="bg-zinc-950 rounded-2xl m-6 min-h-screen pb-10">
       <section className="w-full h-[250px] bg-gradient-to-b from-zinc-600 to-zinc-800 rounded-t-2xl flex flex-row items-center mb-8">
         <figure className="relative group w-[200px] h-[200px] flex justify-center items-center text-7xl text-zinc-500 bg-zinc-800 shadow-zinc-900 shadow-lg rounded-full ml-10">
-          <HiMiniUser className=" opacity-100 group-hover:opacity-0" />
+          <HiMiniUser className="opacity-100 group-hover:opacity-0" />
           <button
             type="button"
             onClick={handleProfileSetting}
@@ -113,7 +122,7 @@ function ProfilePage() {
                 <IoIosClose />
               </button>
             </article>
-            <article className="w-full flex flex-row items-center gap-5">
+            <article className="w-full flex flex-row items-center gap-20">
               <figure className="group w-[180px] h-[180px] flex justify-center items-center text-7xl text-zinc-500 bg-zinc-800 shadow-zinc-900 shadow-lg rounded-full">
                 <HiMiniUser className="absolute" />
                 <article className="absolute flex flex-col justify-center opacity-100 group-hover:opacity-100 text-white text-sm gap-2">
@@ -125,13 +134,31 @@ function ProfilePage() {
                   <span>사진 삭제</span>
                 </article>
               </figure>
-              <article className="w-[220px]flex flex-col justify-center">
-                <form className="flex flex-col justify-end items-end gap-2">
-                  <input
-                    type="text"
-                    className="bg-zinc-700 w-[280px] py-2 rounded-sm"
-                  />
-                  <button className="bg-white py-3 px-8 rounded-full text-charcoal font-bold">
+              <article className="w-[220px] flex flex-col justify-center">
+                <form className="flex flex-col justify-end items-end gap-3">
+                  <label className="flex flex-col">
+                    아이디
+                    <input
+                      type="text"
+                      value={nickname}
+                      onChange={e => setNickname(e.target.value)}
+                      className="bg-zinc-700 w-[250px] py-2 px-5 rounded-sm"
+                    />
+                  </label>
+                  <label className="flex flex-col">
+                    이메일
+                    <input
+                      type="text"
+                      value={email}
+                      onChange={e => setEmail(e.target.value)}
+                      className="bg-zinc-700 w-[250px] py-2 px-5 rounded-sm"
+                    />
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => userDataUpdate()}
+                    className="bg-white py-2 px-8 rounded-full text-charcoal font-bold"
+                  >
                     저장하기
                   </button>
                 </form>
