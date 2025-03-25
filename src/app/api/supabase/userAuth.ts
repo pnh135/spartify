@@ -32,7 +32,7 @@ export const authSignUp = async (
   nickName: string,
 ): Promise<AuthResponse> => {
   try {
-    // 1단계: Supabase Auth에 회원 등록
+
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -51,7 +51,6 @@ export const authSignUp = async (
       };
     }
 
-    // 2단계: public.users 테이블에 추가 정보 저장
     const profile: TablesInsert<"users"> = {
       user_id: data.user.id,
       email: email,
