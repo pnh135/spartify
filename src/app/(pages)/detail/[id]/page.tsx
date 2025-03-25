@@ -1,10 +1,10 @@
 import React from "react";
 import Image from "next/image";
 import { getAlbum } from "@/app/api/spotify/route";
-
+import { SpotifyTrack } from "@/types/track";
 async function AlbumDetailPage({ params }: { params: { id: string } }) {
   const album = await getAlbum(params.id);
-  console.log(album);
+
   return (
     <main className="bg-zinc-950 rounded-2xl m-6 min-h-screen pb-10">
       <section className="flex flex-col from-zinc-600 to-zinc-800 rounded-t-2xl items-center mb-8 mx-8">
@@ -26,13 +26,13 @@ async function AlbumDetailPage({ params }: { params: { id: string } }) {
       <div className="p-4">
         <h2 className="text-2xl font-semibold mb-4 ">수록곡</h2>
         <ul className="space-y-2 ">
-          {album.tracks.items.map((track, idx) => (
+          {album.tracks.items.map((track: SpotifyTrack, index: string) => (
             <li
               key={track.id}
               className="border-b pb-2 flex flex-row justify-between"
             >
               <span className="font-medium">
-                {idx + 1}. {track.name}
+                {index + 1}. {track.name}
               </span>
               <div className="text-md text-gray-500">
                 {Math.floor(track.duration_ms / 60000)}:
