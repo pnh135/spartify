@@ -13,6 +13,7 @@ export type AuthResponse = {
   user: User | null;
   session: Session | null;
   weakPassword?: WeakPassword;
+  error: string | null;
 };
 
 export type Provider = "google" | "spotify" | string;

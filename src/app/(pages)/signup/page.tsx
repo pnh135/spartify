@@ -1,11 +1,39 @@
-import Link from "next/link";
-import React from "react";
+"use client";
 
+import Link from "next/link";
+import React, { useState } from "react";
+import { authSignUp } from "@/app/api/supabase/userAuth";
+import { useRouter } from "next/navigation";
 function SignupPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [nickname, setNickname] = useState("");
+  const router = useRouter();
+
+  const handleSignUp = async () => {
+    if (!email || !password || !nickname) {
+      alert("모든 필드를 입력해주세요.");
+      return;
+    }
+
+    try {
+      const { error } = await authSignUp(email, password, nickname);
+
+      if (error) {
+        alert(`회원가입 실패: ${error}`);
+        return;
+      }
+
+      alert("회원가입 완료! 이메일 인증 후 로그인하세요.");
+      router.push("/login");
+    } catch (error: any) {
+      alert(error.message || "회원가입 중 오류가 발생했습니다.");
+    }
+  };
   return (
     <div className="flex flex-col items-center justify-center w-full h-screen bg-charcoal px-4">
       {/* 중앙 박스 내부 */}
-      <div className="w-full max-w-[350px] lg:max-w-[500px] h-[600px] bg-gunmetal rounded p-10 lg:p-20 flex flex-col items-center justify-center gap-6"> 
+      <div className="w-full max-w-[350px] lg:max-w-[500px] h-[600px] bg-gunmetal rounded p-10 lg:p-20 flex flex-col items-center justify-center gap-6">
         {/* 로그인 페이지 타이틀 */}
         <h2 className="text-offwhite text-center font-bold text-2xl">
           가입하고 콘텐츠 즐기기
@@ -18,7 +46,7 @@ function SignupPage() {
 
         {/* 구분선 */}
         <div className="w-full border-t border-gray-700"></div>
- 
+
         {/* 아이디 인풋 태그 */}
         <div className="w-full">
           <label className="block text-offwhite text-sm mb-1">이메일</label>
@@ -26,6 +54,8 @@ function SignupPage() {
             type="email"
             className="w-full bg-gunmetal text-offwhite border border-offwhite rounded py-2 px-3"
             placeholder="이메일 또는 사용자 이름"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
           />
         </div>
 
@@ -36,6 +66,8 @@ function SignupPage() {
             type="password"
             className="w-full bg-gunmetal text-offwhite border border-offwhite rounded py-2 px-3"
             placeholder="비밀번호"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
           />
         </div>
 
@@ -46,10 +78,15 @@ function SignupPage() {
             type="text"
             className="w-full bg-gunmetal text-offwhite border border-offwhite rounded py-2 px-3"
             placeholder="닉네임"
+            value={nickname}
+            onChange={e => setNickname(e.target.value)}
           />
         </div>
 
-        <button className="w-full bg-neongreen hover:bg-neongreen/80 text-black font-bold rounded-full py-3">
+        <button
+          onClick={handleSignUp}
+          className="w-full bg-neongreen hover:bg-neongreen/80 text-black font-bold rounded-full py-3"
+        >
           회원가입
         </button>
 
