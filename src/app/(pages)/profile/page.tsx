@@ -13,8 +13,24 @@ import { getNewRelease } from "@/utils/fetchNewRelease";
 function ProfilePage() {
   const [optionToggle, setOptionToggle] = useState(false);
   const [profileSettingModal, setProfileSettingModal] = useState(false);
-  const [user, setUser] = useState([]);
   const [newRelease, setNewRelease] = useState([]);
+  const [user, setUser] = useState({});
+
+  interface userType {
+    email: string;
+    email_verified: boolean;
+    name: string;
+    phone_verified: boolean;
+    sub: string;
+  }
+
+  useEffect(() => {
+    const gotfetchApiData = async () => {
+      const data = await getNewRelease();
+      setNewRelease(data);
+    };
+    gotfetchApiData();
+  }, []);
 
   // 유저 상세 설정 버튼 토글 함수 (점 세개))
   const handleOptionToggle = () => {
@@ -28,17 +44,18 @@ function ProfilePage() {
   };
 
   useEffect(() => {
-    const gotfetchApiData = async () => {
-      const data = await getNewRelease();
-      setNewRelease(data);
-    };
-    gotfetchApiData();
+    const userData = JSON.parse(localStorage.getItem("user-storage"));
+    if (userData.state.user.user_metadata) {
+      const data: userType = userData.state.user.user_metadata;
+      console.log("User ID:", data);
+      setUser(data);
+    }
   }, []);
 
   return (
     <main className="bg-zinc-950 rounded-2xl m-6 min-h-screen pb-10">
       <section className="w-full h-[250px] bg-gradient-to-b from-zinc-600 to-zinc-800 rounded-t-2xl flex flex-row items-center mb-8">
-        <figure className="relatvie group w-[200px] h-[200px] flex justify-center items-center text-7xl text-zinc-500 bg-zinc-800 shadow-zinc-900 shadow-lg rounded-full ml-10">
+        <figure className="relative group w-[200px] h-[200px] flex justify-center items-center text-7xl text-zinc-500 bg-zinc-800 shadow-zinc-900 shadow-lg rounded-full ml-10">
           <HiMiniUser className=" opacity-100 group-hover:opacity-0" />
           <button
             type="button"
