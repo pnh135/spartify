@@ -10,14 +10,13 @@ interface AuthState {
 }
 
 // Zustand 스토어 생성
-const useAuthStore = create<AuthState>((set) => ({
+const useAuthStore = create<AuthState>(set => ({
   user: null, // 초기값은 로그인되지 않은 상태
   isAuthenticated: false, // 초기값은 로그인되지 않은 상태
-  login: (userData) => set({ user: userData, isAuthenticated: true }), // 로그인 처리
+  login: userData => set({ user: userData, isAuthenticated: true }), // 로그인 처리
   logout: () => set({ user: null, isAuthenticated: false }), // 로그아웃 처리
 }));
 
 export default useAuthStore;
 
-
-useAuthListener, session, event, 
+// useAuthListener, session, event,
