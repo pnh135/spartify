@@ -13,8 +13,7 @@ type CommentListProps = {
 // 댓글 수정용 parameter 타입 정의
 type EditCommentParams = {
   editComment: string;
-  userId: string;
-  albumId: string;
+  commentId: number;
 };
 
 const CommentList = ({ albumId }: CommentListProps) => {
@@ -42,6 +41,7 @@ const CommentList = ({ albumId }: CommentListProps) => {
         .eq("album_id", albumId)
         .order("created_at", { ascending: false });
       if (error) throw error;
+
       return data;
     },
   });
@@ -62,11 +62,11 @@ const CommentList = ({ albumId }: CommentListProps) => {
 
   //댓글 삭제
   const deleteCommentMutation = useMutation({
-    mutationFn: async () => {
+    mutationFn: async (commentId: number) => {
       const { error } = await supabase
         .from("comments")
         .delete()
-        .match({ user_id: userId, album_id: albumId }); // user_id와 album_id로 댓글 찾기
+        .match({ id: commentId });
       if (error) throw error;
     },
     onSuccess: () => {
@@ -76,11 +76,11 @@ const CommentList = ({ albumId }: CommentListProps) => {
 
   //댓글 수정
   const editCommentMutation = useMutation({
-    mutationFn: async ({ editComment, userId, albumId }: EditCommentParams) => {
+    mutationFn: async ({ editComment, commentId }: EditCommentParams) => {
       const { error } = await supabase
         .from("comments")
         .update({ content: editComment })
-        .match({ user_id: userId, album_id: albumId }) // user_id와 album_id로 댓글 찾기
+        .match({ id: commentId }) // user_id와 album_id로 댓글 찾기
         .single();
       if (error) throw error;
     },
@@ -98,19 +98,21 @@ const CommentList = ({ albumId }: CommentListProps) => {
   };
 
   // 댓글 삭제 버튼 클릭 핸들러
-  const handleDeleteComment = () => {
+  const handleDeleteComment = (commentId: number) => {
     if (!userId) return alert("로그인 후 이용해주세요.");
-    deleteCommentMutation.mutate();
+    deleteCommentMutation.mutate(commentId);
   };
 
   // 댓글 수정 버튼 핸들러
-  const handleEditComment = (content: string) => {
-    const updatedContent = prompt("수정할 내용을 입력하세요", content)?.trim();
+  const handleEditComment = (commentId: number, currentContent: string) => {
+    const updatedContent = prompt(
+      "수정할 내용을 입력하세요",
+      currentContent,
+    )?.trim();
     if (updatedContent) {
       editCommentMutation.mutate({
         editComment: updatedContent,
-        userId,
-        albumId,
+        commentId,
       });
     }
   };
@@ -141,13 +143,15 @@ const CommentList = ({ albumId }: CommentListProps) => {
             <p>{comment.content}</p>
             <div className="flex gap-4 mt-2">
               <button
-                onClick={() => handleEditComment(comment.content || "")}
+                onClick={() =>
+                  handleEditComment(comment.id, comment.content || "")
+                }
                 className="text-zinc-300 hover:text-white transition duration-300"
               >
                 수정
               </button>
               <button
-                onClick={handleDeleteComment}
+                onClick={() => handleDeleteComment(comment.id)}
                 className="text-zinc-300 hover:text-white transition duration-300"
               >
                 삭제
