@@ -80,8 +80,7 @@ const CommentList = ({ albumId }: CommentListProps) => {
       const { error } = await supabase
         .from("comments")
         .update({ content: editComment })
-        .match({ id: commentId }) // user_id와 album_id로 댓글 찾기
-        .single();
+        .match({ id: commentId });
       if (error) throw error;
     },
     onSuccess: () => {
