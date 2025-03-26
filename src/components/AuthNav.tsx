@@ -6,19 +6,34 @@ import Link from "next/link";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
 
+interface SupabaseUnsubscribable {
+  unsubscribe: () => void;
+}
+
 const AuthNav = () => {
   // zustand 스토어 에서 상태, 함수 가져오기
-  const { user, isLogin, clearUser } = useUserStore();
+  const { isLogin, clearUser } = useUserStore();
 
   // 컴포넌트 마운트 시 인증 상태 변경 리스너 설정
   useEffect(() => {
-    // Auth 상태 변경 리스너 설정
-    const authListener = handleAuthStateChange();
+    let subscription: SupabaseUnsubscribable | null = null;
+    
+    // 비동기 함수로 인증 상태 변경 리스너 설정
+    const setupAuthListener = async () => {
+      try {
+        const authListener = await handleAuthStateChange();
+        subscription = authListener.subscription;
+      } catch (error) {
+        console.error("인증 리스너 설정 중 오류:", error);
+      }
+    };
+    
+    setupAuthListener();
     
     // 컴포넌트 언마운트 시 리스너 제거
     return () => {
-      if (authListener && authListener.subscription) {
-        authListener.subscription.unsubscribe();
+      if (subscription) {
+        subscription.unsubscribe();
       }
     };
   }, []);
