@@ -38,7 +38,6 @@ export async function getNewRelease() {
   if (!res.ok) throw new Error("Failed to fetch new releases");
 
   const data = await res.json();
-  console.log(data);
   return data.albums.items;
 }
 
