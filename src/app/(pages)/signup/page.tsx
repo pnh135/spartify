@@ -10,10 +10,18 @@ import UserForm from "@/components/auth/UserForm";
 function SignupPage() {
   const router = useRouter();
 
-  const handleSignup = async (data: { email: string; password: string; userName: string }) => {
+  const handleSignup = async (data: {
+    email: string;
+    password: string;
+    userName: string;
+  }) => {
     try {
       // 회원가입 API 호출
-      const { error } = await authSignUp(data.email, data.password, data.userName);
+      const { error } = await authSignUp(
+        data.email,
+        data.password,
+        data.userName,
+      );
 
       if (error) {
         Swal.fire({
@@ -33,7 +41,7 @@ function SignupPage() {
         confirmButtonColor: "#3085d6",
         confirmButtonText: "확인",
       });
-      
+
       router.push("/login");
     } catch (error) {
       Swal.fire({
@@ -49,14 +57,14 @@ function SignupPage() {
   return (
     <div className="flex flex-col items-center justify-center w-full h-screen bg-charcoal px-4">
       {/* 중앙 박스 내부 */}
-      <div className="w-full max-w-[350px] lg:max-w-[500px] h-auto bg-gunmetal rounded p-10 lg:p-20 flex flex-col items-center justify-center gap-6">
+      <div className="w-full max-w-[350px] lg:max-w-[500px] h-[700px] bg-gunmetal rounded p-10 lg:p-20 flex flex-col items-center justify-center gap-6">
         {/* 회원가입 페이지 타이틀 */}
-        <h2 className="text-offwhite text-center font-bold text-2xl mb-4">
+        <h2 className="text-offwhite text-center font-semibold text-2xl mb-4">
           가입하고 콘텐츠 즐기기
         </h2>
 
         {/* 서드파티 회원가입 영역 */}
-        <button className="w-full bg-gunmetal text-offwhite border border-gray-600 hover:border-gray-400 rounded-full py-2 px-4 flex items-center justify-center">
+        <button className="w-full bg-gunmetal text-offwhite border border-gray-600 hover:border-gray-400 rounded-full py-2 px-4 flex items-center justify-center text-sm">
           Google로 가입하기
         </button>
 
@@ -68,8 +76,8 @@ function SignupPage() {
 
         <div className="text-offwhite text-sm text-center mt-4">
           계정이 있으신가요?{" "}
-          <Link href={"/login"} className="text-offwhite underline">
-            Spartify에 로그인하기
+          <Link href={"/login"} className="text-neongreen font-bold underline">
+            로그인
           </Link>
         </div>
       </div>
