@@ -1,13 +1,11 @@
 import React from "react";
 import Image from "next/image";
 import { getAlbum } from "@/app/api/spotify/route";
-// import { SpotifyTrack } from "@/types/track";
 import TrackList from "@/components/TrackList";
 import LikeBtn from "@/components/LikeBtn";
 
 async function AlbumDetailPage({ params }: { params: { id: string } }) {
   const album = await getAlbum(params.id);
-  console.log(album.tracks);
   return (
     <main className=" bg-zinc-950 rounded-2xl m-4 sm:m-6 min-h-screen pb-4">
       <section className=" flex flex-col  from-zinc-600 to-zinc-800 rounded-t-2xl  items-center mb-4 mx-4 sm:mx-8 ">

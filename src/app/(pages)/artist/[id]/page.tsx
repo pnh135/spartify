@@ -9,8 +9,6 @@ export default async function ArtistDetailPage({
   const artist = await getArtist(params.id);
   const artistAlbum = await getArtistAlbum(params.id);
   const albums = artistAlbum.items;
-  console.log(artistAlbum);
-  console.log(albums);
   return (
     <main className="bg-zinc-950 rounded-2xl m-6 min-h-screen pb-10">
       <section className="flex flex-col items-center mb-8 mx-8">
