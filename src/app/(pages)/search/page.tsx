@@ -18,8 +18,6 @@ export default async function SearchPage({
   const albums: SpotifyAlbum[] = data.albums?.items || [];
   const artists: SpotifyArtist[] = data.artists?.items || [];
 
-  // console.log(artists);
-  console.log(artists);
   return (
     <main className="p-6 bg-charcoal min-h-screen">
       <span className="text-2xl font-bold text-offwhite mb-6">
