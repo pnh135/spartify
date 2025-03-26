@@ -6,6 +6,7 @@ import { authLogin } from "@/app/api/supabase/userAuth";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import UserForm from "@/components/auth/UserForm";
+import ThirdPartyLoginButton from "@/components/auth/ThirdPartyLoginButton";
 
 function LoginPage() {
   const router = useRouter();
@@ -48,12 +49,7 @@ function LoginPage() {
         </h2>
 
         {/* 소셜 로그인 영역 */}
-        <button
-          type="button"
-          className="w-full bg-gunmetal text-offwhite border border-gray-600 hover:border-gray-400 rounded-full py-2 px-4 flex items-center justify-center text-sm"
-        >
-          Google로 계속하기
-        </button>
+        <ThirdPartyLoginButton />
 
         {/* 구분선 */}
         <div className="w-full border-t border-gray-700"></div>
