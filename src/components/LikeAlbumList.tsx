@@ -1,19 +1,25 @@
-"use client";
-
-import React from "react";
+import { supabase } from "@/app/api/supabase/supabase";
+import { getAlbum } from "@/app/api/spotify/route";
 import AlbumList from "./AlbumList";
-import { getAlbum, getPublicAccessToken } from "@/app/api/spotify/route";
 import { SpotifyAlbum } from "@/types/album";
-import useLikeAlbum from "@/hooks/useLikeAlbum";
 
-function LikeAlbumList() {
-  const token: string = getPublicAccessToken();
-  const sortString = useLikeAlbum();
-  const albums: SpotifyAlbum[] = getAlbum(sortString);
+export default async function LikeAlbumList() {
+  const { data } = await supabase.from("liked_albums").select("album_id");
 
-  console.log(sortString);
-  console.log(albums);
-  //   return <AlbumList albumData={albums} albumListName="좋아요 순위" />;
+  const likedRank: Record<string, number> = {};
+  data?.forEach(item => {
+    if (item.album_id) {
+      likedRank[item.album_id] = (likedRank[item.album_id] || 0) + 1;
+    }
+  });
+
+  const albumIds = Object.entries(likedRank)
+    .sort((a, b) => b[1] - a[1])
+    .map(([id]) => id);
+
+  const albums: SpotifyAlbum[] = await Promise.all(
+    albumIds.map(id => getAlbum(id)),
+  );
+
+  return <AlbumList albumData={albums} albumListName="좋아요 순위" />;
 }
-
-export default LikeAlbumList;
