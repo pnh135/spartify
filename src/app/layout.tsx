@@ -20,20 +20,7 @@ export default function RootLayout({
     <html lang="ko">
       <body className="bg-charcoal text-white">
         <header className="fixed top-0 left-0 w-full h-16 bg-charcoal">
-          <nav className="flex h-full justify-between items-center px-4">
-            <section>
-              <Link href="/" className="flex flex-row justify-center">
-                <div className="bg-neongreen border border-transparent w-10 h-10 rounded-full" />
-                {/* 로고가 들어갈 곳 */}
-                <p className="p-2">Spartify</p>
-              </Link>
-            </section>
-            <section>
-              <SearchBar />
-            </section>
-
-            <AuthNav />
-          </nav>
+          <AuthNav />
         </header>
 
         <aside className="fixed top-16 left-0 w-[240px] h-[calc(100vh-4rem)]">
