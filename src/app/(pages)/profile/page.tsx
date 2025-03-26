@@ -11,7 +11,9 @@ import { supabase } from "@/app/api/supabase/supabase";
 import useUserStore from "@/store/useUserstore";
 import UserSettingModal from "@/components/UserSettingModal";
 import type { SpotifyAlbum } from "@/types/album";
+import { getUserInfo } from "@/utils/getUserData";
 
+//useEffect 최대한 없애고 tanstackQuery하기!!! 무조건!!!!!!!!!!!!!!무조건!!!!!!!!!!!!!
 export interface userType {
   email: string;
   email_verified: boolean;
@@ -23,6 +25,7 @@ export interface userType {
 function ProfilePage() {
   const [optionToggle, setOptionToggle] = useState<boolean>(false);
   const [newRelease, setNewRelease] = useState<SpotifyAlbum[]>([]);
+  const [userName, setUserName] = useState<string>("");
   const [profileSettingModal, setProfileSettingModal] =
     useState<boolean>(false);
 
@@ -35,18 +38,21 @@ function ProfilePage() {
     gotfetchApiData();
   }, []);
 
-  // useUserStore에서 user 가져오기
-  const { user } = useUserStore();
-  // const email = user.user_metadata.email || ""; // optional chaining이 있어야 하나?????? 고민 고고!
-  const name = user.user_metadata.name || "";
-  console.log("현재 세션 유저:", user);
+  // // useUserStore에서 user 가져오기
+  // const { user } = useUserStore();
+  // // const email = user.user_metadata.email || ""; // optional chaining이 있어야 하나?????? 고민 고고!
+  // const name = user.user_metadata.name || "";
+  // console.log("현재 세션 유저:", user);
 
   // 수퍼베이스 유저 정보 갸져오기
   useEffect(() => {
-    //// useEffect 최대한 없애고 tanstackQuery하기!!! 무조건!!!!!!!!!!!!!!무조건!!!!!!!!!!!!!
-    const fetchUserData = async () => {
-      const userData = await supabase.from;
+    const fetchUser = async () => {
+      const userInfo = await getUserInfo();
+      console.log("this this the userInfoooooooo", userInfo.name);
+      setUserName(userInfo.name);
     };
+
+    fetchUser();
   }, []);
 
   // 유저 상세 설정 버튼 토글 함수 (점 세개))
@@ -78,7 +84,7 @@ function ProfilePage() {
         </figure>
         <section className="text-white ml-10">
           <p className="text-[14px]">프로필</p>
-          <h1 className="text-7xl font-black mt-3">{name}</h1>
+          <h1 className="text-7xl font-black mt-3">{userName}</h1>
           <p className="text-[14px] font-normal mt-2">좋아요한 앨범 수 개</p>
         </section>
       </section>
