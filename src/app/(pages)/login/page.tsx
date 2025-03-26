@@ -43,14 +43,14 @@ function LoginPage() {
       {/* 중앙 박스 내부 */}
       <div className="w-full max-w-[350px] lg:max-w-[500px] h-auto bg-gunmetal rounded p-10 lg:p-20 flex flex-col items-center justify-center gap-6">
         {/* 로그인 페이지 타이틀 */}
-        <h2 className="text-offwhite text-center font-bold text-2xl">
-          Spartify에 로그인하기
+        <h2 className="text-offwhite text-center font-semibold text-2xl">
+          Spartify에 로그인
         </h2>
 
         {/* 소셜 로그인 영역 */}
         <button
           type="button"
-          className="w-full bg-gunmetal text-offwhite border border-gray-600 hover:border-gray-400 rounded-full py-2 px-4 flex items-center justify-center"
+          className="w-full bg-gunmetal text-offwhite border border-gray-600 hover:border-gray-400 rounded-full py-2 px-4 flex items-center justify-center text-sm"
         >
           Google로 계속하기
         </button>
@@ -63,8 +63,8 @@ function LoginPage() {
 
         <div className="text-offwhite text-sm text-center">
           계정이 없나요?{" "}
-          <Link href={"/signup"} className="text-offwhite underline">
-            Spartify에 가입하기
+          <Link href={"/signup"} className="text-neongreen font-bold underline">
+            회원가입
           </Link>
         </div>
       </div>
