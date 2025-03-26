@@ -1,4 +1,3 @@
-// src/app/api/spotify/searchResults/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { getSearchResults } from "../route";
 
@@ -7,10 +6,7 @@ export async function GET(req: NextRequest) {
   const query = searchParams.get("q");
 
   if (!query || query.trim() === "") {
-    return NextResponse.json(
-      { error: "검색어는 필수입니다." },
-      { status: 400 },
-    );
+    return NextResponse.json({ error: "검색어는 입력하세요" }, { status: 400 });
   }
 
   try {

@@ -7,3 +7,7 @@ export interface SpotifyArtistFromAlbum {
     height: number;
   }[];
 }
+
+// export interface SpotifyArtist{
+
+// }
