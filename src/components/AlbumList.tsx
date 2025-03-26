@@ -27,6 +27,8 @@ export default function AlbumList({
                 <article className="text-white hover:bg-zinc-800 p-3 rounded-md group">
                   <figure className="w-[180px] h-[180px] overflow-hidden mb-2 rounded-md relative">
                     <Image
+                      priority
+                      quality={100}
                       src={album.images[0]?.url ?? "/placeholder.png"}
                       alt={album.name}
                       width={400}

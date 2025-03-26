@@ -100,11 +100,15 @@ export async function getArtistAlbum(id: string) {
 
 export async function getSearchResults(query: string) {
   const accessToken = await getPublicAccessToken();
-  const res = await fetch(`https://api.spotify.com/v1/search?q=${query}`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
+  const res = await fetch(
+    `https://api.spotify.com/v1/search?q=${query}&type=album,artist&limit=20
+`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
     },
-  });
+  );
 
   const data = await res.json();
   return data;

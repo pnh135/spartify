@@ -5,7 +5,6 @@ import {
   getPublicAccessToken,
   getNewRelease,
 } from "@/app/api/spotify/route";
-
 import { SpotifyAlbum } from "@/types/album";
 // import SearchBar from "@/components/SearchBar";
 

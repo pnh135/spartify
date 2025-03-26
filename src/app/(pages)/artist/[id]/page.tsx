@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { getArtist, getArtistAlbum } from "@/app/api/spotify/route";
 import AlbumList from "@/components/AlbumList";
+
 export default async function ArtistDetailPage({
   params,
 }: {
