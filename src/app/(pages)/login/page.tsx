@@ -1,19 +1,20 @@
 "use client";
+
 import Link from "next/link";
 import React, { useState } from "react";
 import { authLogin } from "@/app/api/supabase/userAuth";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
+
 function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const router = useRouter();
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const { user, error } = await authLogin(email, password);
-      console.log(user);
 
       if (error) throw error;
       await Swal.fire({
