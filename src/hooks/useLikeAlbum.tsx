@@ -3,7 +3,7 @@
 import { supabase } from "@/app/api/supabase/supabase";
 import { useQuery } from "@tanstack/react-query";
 
-// const type arr = {string || number}
+type arr = [string, number][];
 
 function useLikeAlbum() {
   const albumId = "album_id";
@@ -28,11 +28,12 @@ function useLikeAlbum() {
       likedRank[item.album_id] = 1;
     }
   });
-  const sortArr = Object.entries(likedRank);
-  const sortLike = Object.fromEntries(sortArr.sort((a, b) => b[1] - a[1]));
+  const sortArr: arr = Object.entries(likedRank);
+  const sortLike = sortArr.sort((a, b) => b[1] - a[1]);
+  console.log("likedRank", likedRank);
   console.log("sortArr", sortArr);
   console.log("sortLike", sortLike);
-  return { data, getLikedNumber };
+  return { data, sortLike };
 }
 
 export default useLikeAlbum;
