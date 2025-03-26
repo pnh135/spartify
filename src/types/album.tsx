@@ -1,3 +1,5 @@
+import { SpotifyTrack } from "./track";
+
 export type album = {
   title: string;
   artist: string;
@@ -18,11 +20,12 @@ export interface SpotifyAlbum {
     id: string;
   }[];
   tracks: {
-    items: {
-      name: string;
-      id: string;
-      duration_ms: number;
-      preview_url: string | null;
-    }[];
+    href: string;
+    items: SpotifyTrack[];
+    limit: number;
+    offset: number;
+    total: number;
+    next: string | null;
+    previous: string | null;
   };
 }
