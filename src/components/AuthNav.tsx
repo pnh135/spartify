@@ -4,7 +4,10 @@ import { supabase } from "@/app/api/supabase/supabase";
 import useUserStore, { handleAuthStateChange } from "@/store/useUserstore";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+
 import Swal from "sweetalert2";
+import SearchBar from "./SearchBar";
 
 interface SupabaseUnsubscribable {
   unsubscribe: () => void;
@@ -18,7 +21,7 @@ const AuthNav = () => {
   // 컴포넌트 마운트 시 먼저 현재 세션 확인 후 리스너 설정
   useEffect(() => {
     let subscription: SupabaseUnsubscribable | null = null;
-    
+   
     const setupAuth = async () => {
       try {
         // 현재 세션을 직접 확인하여 상태 업데이트
@@ -51,6 +54,8 @@ const AuthNav = () => {
     };
   }, [setUser]);
 
+  const pathname: string = usePathname();
+
   // 로그아웃 핸들러
   const handleLogout = async () => {
     const result = await Swal.fire({
@@ -81,7 +86,7 @@ const AuthNav = () => {
         icon: "error",
         confirmButtonColor: "#d33",
       });
-      console.error('로그아웃 중 오류 발생:', error);
+      console.error("로그아웃 중 오류 발생:", error);
     }
   };
 
@@ -94,27 +99,41 @@ const AuthNav = () => {
     );
   }
 
-  return (
-    <section className="flex gap-7">
-      {/* 로그인되지 않았을 때 */}
-      {!isLogin && (
-        <Link href="/login">
-          <p>로그인</p>
-        </Link>
-      )}
+  if (pathname === "/login" || pathname === "/signup") return <></>;
 
-      {/* 로그인되었을 때 */}
-      {isLogin && (
-        <>
-          <button onClick={handleLogout}>
-            <p>로그아웃</p>
-          </button>
-          <Link href="/profile">
-            <p>프로필</p>
+  return (
+    <nav className="flex h-full justify-between items-center px-4">
+      <section>
+        <Link href="/" className="flex flex-row justify-center">
+          <div className="bg-neongreen border border-transparent w-10 h-10 rounded-full" />
+          {/* 로고가 들어갈 곳 */}
+          <p className="p-2">Spartify</p>
+        </Link>
+      </section>
+      <section>
+        <SearchBar />
+      </section>
+      <section className="flex gap-7">
+        {/* 로그인되지 않았을 때 */}
+        {!isLogin && (
+          <Link href="/login">
+            <p>로그인</p>
           </Link>
-        </>
-      )}
-    </section>
+        )}
+
+        {/* 로그인되었을 때 */}
+        {isLogin && (
+          <>
+            <button onClick={handleLogout}>
+              <p>로그아웃</p>
+            </button>
+            <Link href="/profile">
+              <p>프로필</p>
+            </Link>
+          </>
+        )}
+      </section>
+    </nav>
   );
 };
 
