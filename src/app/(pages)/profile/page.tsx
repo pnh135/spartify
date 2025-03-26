@@ -7,11 +7,10 @@ import { HiMiniUser, HiOutlinePencil } from "react-icons/hi2";
 import { RiFileCopyLine } from "react-icons/ri";
 import AlbumList from "../../../components/AlbumList";
 import { getNewRelease } from "@/utils/fetchNewRelease";
-import { supabase } from "@/app/api/supabase/supabase";
-import useUserStore from "@/store/useUserstore";
 import UserSettingModal from "@/components/UserSettingModal";
 import type { SpotifyAlbum } from "@/types/album";
 import { getUserInfo } from "@/utils/getUserData";
+import { handleUpdateUserData } from "@/utils/updateUserData";
 
 //useEffect 최대한 없애고 tanstackQuery하기!!! 무조건!!!!!!!!!!!!!!무조건!!!!!!!!!!!!!
 export interface userType {
@@ -38,31 +37,24 @@ function ProfilePage() {
     gotfetchApiData();
   }, []);
 
-  // // useUserStore에서 user 가져오기
-  // const { user } = useUserStore();
-  // // const email = user.user_metadata.email || ""; // optional chaining이 있어야 하나?????? 고민 고고!
-  // const name = user.user_metadata.name || "";
-  // console.log("현재 세션 유저:", user);
-
-  // 수퍼베이스 유저 정보 갸져오기
+  // // 수퍼베이스 유저 정보 갸져오기
   useEffect(() => {
     const fetchUser = async () => {
       const userInfo = await getUserInfo();
       console.log("this this the userInfoooooooo", userInfo.name);
       setUserName(userInfo.name);
     };
-
     fetchUser();
-  }, []);
+  }, [userName]);
 
   // 유저 상세 설정 버튼 토글 함수 (점 세개))
   const handleOptionToggle = () => {
-    setOptionToggle(!optionToggle); // 함수형 업데이트 활용 (prev 쓰는거!!)
+    setOptionToggle(prev => !prev); // 함수형 업데이트 활용 (prev 쓰는거!!)
   };
 
   // 유저 상세 설정 모달 토글 함수
   const handleProfileSetting = () => {
-    setProfileSettingModal(!profileSettingModal);
+    setProfileSettingModal(prev => !prev);
     setOptionToggle(false);
   };
 
@@ -84,8 +76,8 @@ function ProfilePage() {
         </figure>
         <section className="text-white ml-10">
           <p className="text-[14px]">프로필</p>
-          <h1 className="text-7xl font-black mt-3">{userName}</h1>
-          <p className="text-[14px] font-normal mt-2">좋아요한 앨범 수 개</p>
+          <h1 className="text-7xl h-20 font-black mt-3">{userName}</h1>
+          <p className="text-[14px] font-normal mt-3">좋아요한 앨범 수 개</p>
         </section>
       </section>
       <section className="relative">
@@ -116,10 +108,19 @@ function ProfilePage() {
       {/** html요소가 많이 보이면 좋은 리액트 코드가 아니다!!!!  컴포넌트화 필요!!!!!!!!!!!!!!!!!!!!!!!! */}
 
       {/* 프로필 수정 모달창 */}
-      <UserSettingModal
-        profileSettingModal={profileSettingModal}
-        setProfileSettingModal={setProfileSettingModal}
-      />
+      {profileSettingModal && (
+        <>
+          <div
+            className="fixed inset-0 bg-black bg-opacity-70 z-20"
+            onClick={() => setProfileSettingModal(false)} // 배경 클릭 시 모달 닫기
+          ></div>
+          <UserSettingModal
+            profileSettingModal={profileSettingModal}
+            setProfileSettingModal={setProfileSettingModal}
+          />
+        </>
+      )}
+
       <article>
         <AlbumList albumListName={"최신 앨범"} albumData={newRelease} />
       </article>
