@@ -34,6 +34,33 @@ export type Database = {
   };
   public: {
     Tables: {
+      comments: {
+        Row: {
+          album_id: string | null;
+          content: string | null;
+          created_at: string;
+          id: number;
+          updated_at: string | null;
+          user_id: string | null;
+        };
+        Insert: {
+          album_id?: string | null;
+          content?: string | null;
+          created_at?: string;
+          id?: number;
+          updated_at?: string | null;
+          user_id?: string | null;
+        };
+        Update: {
+          album_id?: string | null;
+          content?: string | null;
+          created_at?: string;
+          id?: number;
+          updated_at?: string | null;
+          user_id?: string | null;
+        };
+        Relationships: [];
+      };
       liked_albums: {
         Row: {
           album_id: string | null;
@@ -52,36 +79,6 @@ export type Database = {
           created_at?: string;
           id?: number;
           user_id?: string | null;
-        };
-        Relationships: [];
-      };
-      spotify_token: {
-        Row: {
-          access_token: string;
-          created_at: string;
-          expires_at: string;
-          refresh_token: string;
-          scope: string | null;
-          token_type: string | null;
-          userId: number;
-        };
-        Insert: {
-          access_token: string;
-          created_at?: string;
-          expires_at: string;
-          refresh_token: string;
-          scope?: string | null;
-          token_type?: string | null;
-          userId?: number;
-        };
-        Update: {
-          access_token?: string;
-          created_at?: string;
-          expires_at?: string;
-          refresh_token?: string;
-          scope?: string | null;
-          token_type?: string | null;
-          userId?: number;
         };
         Relationships: [];
       };

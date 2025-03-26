@@ -30,6 +30,7 @@ const LikeBtn = ({ albumId }: LikeBtnProps) => {
 
       return likes;
     },
+    enabled: !!userId,
   });
 
   //좋아요 추가
@@ -70,8 +71,8 @@ const LikeBtn = ({ albumId }: LikeBtnProps) => {
   if (isPending) return <div>로딩 중...</div>;
   if (isError) return <div>로딩 실패</div>;
 
+  //좋아요 추가 버튼 핸들러
   const handleLikeBtn = () => {
-    console.log("여기!!!!!!", userId);
     if (!userId) return alert("로그인 후 이용해주세요.");
     if (liked) {
       deleteLikeMutation.mutate();
@@ -83,11 +84,13 @@ const LikeBtn = ({ albumId }: LikeBtnProps) => {
 
   return (
     <div>
-      <p>{likeCount}</p>
+      <p className="text-white">{likeCount}</p>
       <button
         onClick={handleLikeBtn}
         className={`px-4 py-2 rounded-lg text-white ${
-          liked ? "bg-red-500" : "bg-gray-500"
+          liked
+            ? "bg-zinc-950 border-2 border-zinc-500"
+            : "bg-zinc-700 hover:bg-zinc-600"
         }`}
       >
         {liked ? "취소" : "좋아요"}
