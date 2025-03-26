@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { getAritstAlbum } from "../route";
+import { getArtistAlbum } from "../route";
 
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const albums = await getAritstAlbum(id);
+    const albums = await getArtistAlbum(id);
     return Response.json(albums);
   } catch (error) {
     console.error(error);

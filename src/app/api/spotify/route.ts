@@ -82,10 +82,10 @@ export async function getArtist(id: string) {
   return res.json();
 }
 
-export async function getAritstAlbum(id: string) {
+export async function getArtistAlbum(id: string) {
   const accessToken = await getPublicAccessToken();
   const res = await fetch(
-    `https://api.spotify.com/v1/artists/${id}https://api.spotify.com/v1/artists/${id}/albums?include_groups=album,single&market=US&limit=50`,
+    `https://api.spotify.com/v1/artists/${id}/albums?include_groups=album,single&market=US&limit=50`,
     {
       headers: {
         Authorization: `Bearer ${accessToken}`,
