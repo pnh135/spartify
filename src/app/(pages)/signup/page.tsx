@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { checkNickname } from "@/app/api/supabase/validation";
+import { supabase } from "@/app/api/supabase/supabase";
 
 // 유효성 검사를 위한 Zod Schema Definition
 const formSchema = z
@@ -30,22 +30,12 @@ function SignupPage() {
   const router = useRouter();
   const [checkedDuplication, setCheckedDuplication] = useState(false);
   const [isChecking, setIsChecking] = useState(false);
-  const [savedEmail, setSavedEmail] = useState("");
-
-  // localStorage에서 저장된 이메일 가져오기
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedEmail = localStorage.getItem("rememberUserId") || "";
-      setSavedEmail(storedEmail);
-    }
-  }, []);
 
   // React Hook Form 설정
   const {
     register,
     handleSubmit,
     watch,
-    setValue,
     formState: { errors, isValid },
   } = useForm<FormData>({
     mode: "onChange",
@@ -58,17 +48,26 @@ function SignupPage() {
     },
   });
 
-  // 저장된 이메일이 있을 경우 폼에 적용
-  useEffect(() => {
-    if (savedEmail) {
-      setValue("email", savedEmail);
-    }
-  }, [savedEmail, setValue]);
-
   // 입력값 모니터링
-  const userEmailValue = watch("email");
   const userNameValue = watch("userName");
-  const passwordValue = watch("password");
+
+ const checkNickname = async (userName: string) => {
+    try {
+      const { data, error } = await supabase
+        .from("users")
+        .select("user_id")
+        .eq("name", userName.trim())
+        .limit(1);
+
+      return { data, error };
+    } catch (error) {
+      console.error("닉네임 중복 확인 API 오류:", error);
+      return {
+        data: null,
+        error: { message: "서버 오류가 발생했습니다." },
+      };
+    }
+  };
 
   // 닉네임 중복 확인
   const onHandleDuplication = async () => {
@@ -149,14 +148,6 @@ function SignupPage() {
           confirmButtonText: "확인",
         });
         return;
-      }
-
-      // 이메일 저장 (RememberMe 기능)
-      if (document.getElementById('rememberMe') instanceof HTMLInputElement && 
-          (document.getElementById('rememberMe') as HTMLInputElement).checked) {
-        localStorage.setItem('rememberUserId', data.email);
-      } else {
-        localStorage.removeItem('rememberUserId');
       }
 
       await Swal.fire({
@@ -265,19 +256,6 @@ function SignupPage() {
             {checkedDuplication && (
               <p className="mt-1 text-sm text-green-500">사용 가능한 닉네임입니다.</p>
             )}
-          </div>
-
-          {/* 이메일 기억하기 체크박스 */}
-          <div className="flex items-center mt-2">
-            <input
-              id="rememberMe"
-              type="checkbox"
-              defaultChecked={Boolean(savedEmail)}
-              className="h-4 w-4 text-neongreen rounded"
-            />
-            <label htmlFor="rememberMe" className="ml-2 block text-sm text-offwhite">
-              이메일 기억하기
-            </label>
           </div>
 
           {/* 제출 버튼 */}
