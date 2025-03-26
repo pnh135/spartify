@@ -7,11 +7,7 @@ import LikeBtn from "@/components/LikeBtn";
 
 async function AlbumDetailPage({ params }: { params: { id: string } }) {
   const album = await getAlbum(params.id);
-<<<<<<< HEAD
-  //console.log(album);
-=======
   console.log(album.tracks);
->>>>>>> 67d7ec18ad187857a791216b1a16932145a24200
   return (
     <main className=" bg-zinc-950 rounded-2xl m-4 sm:m-6 min-h-screen pb-4">
       <section className=" flex flex-col  from-zinc-600 to-zinc-800 rounded-t-2xl  items-center mb-4 mx-4 sm:mx-8 ">
