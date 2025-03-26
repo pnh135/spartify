@@ -36,10 +36,6 @@ function useLikeAlbum() {
   // 검색하기 위해 문자 배열로 만들기
   const sortString = sortArr.map(([key]) => `${key}`);
 
-  console.log("sortArr", sortArr);
-  console.log("sortLike", sortLike);
-  console.log("sortString", sortString);
-
   return sortString;
 }
 
