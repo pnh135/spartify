@@ -19,5 +19,13 @@ export interface SpotifyAlbum {
     name: string;
     id: string;
   }[];
-  tracks: SpotifyTrack[];
+  tracks: {
+    href: string;
+    items: SpotifyTrack[];
+    limit: number;
+    offset: number;
+    total: number;
+    next: string | null;
+    previous: string | null;
+  };
 }

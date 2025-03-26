@@ -3,6 +3,8 @@ import Image from "next/image";
 import { getAlbum } from "@/app/api/spotify/route";
 // import { SpotifyTrack } from "@/types/track";
 import TrackList from "@/components/TrackList";
+import LikeBtn from "@/components/LikeBtn";
+
 async function AlbumDetailPage({ params }: { params: { id: string } }) {
   const album = await getAlbum(params.id);
   console.log(album.tracks);
@@ -21,6 +23,7 @@ async function AlbumDetailPage({ params }: { params: { id: string } }) {
         <div className="flex flex-col justify-between text-white w-full p-4 ">
           <h1 className="text-2xl font-black mt-3">{album.name}</h1>
           <p className="opacity-40 pt-2">{album.artists[0].name}</p>
+          <LikeBtn albumId={params.id} />
         </div>
       </section>
 
