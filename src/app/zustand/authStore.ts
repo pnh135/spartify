@@ -18,3 +18,5 @@ const useAuthStore = create<AuthState>(set => ({
 }));
 
 export default useAuthStore;
+
+// useAuthListener, session, event,

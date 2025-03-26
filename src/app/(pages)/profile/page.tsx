@@ -3,37 +3,35 @@
 
 import React, { useEffect, useState } from "react";
 import { AiOutlineEllipsis } from "react-icons/ai";
-import { HiOutlinePencil } from "react-icons/hi2";
+import { HiOutlinePencil, HiMiniUser } from "react-icons/hi2";
 import { RiFileCopyLine } from "react-icons/ri";
-import { HiMiniUser } from "react-icons/hi2";
 import { IoIosClose } from "react-icons/io";
 import AlbumList from "../../../components/AlbumList";
-import type { album } from "../../../types/album";
-import { getNewRelease } from "@/app/api/spotify/token/route";
-import { supabase } from "@/app/api/supabase/supabase";
-
+import { getNewRelease } from "@/utils/fetchNewRelease";
 //   주석달기
+
+interface userType {
+  email: string;
+  email_verified: boolean;
+  name: string;
+  phone_verified: boolean;
+  sub: string;
+}
 
 function ProfilePage() {
   const [optionToggle, setOptionToggle] = useState(false);
   const [profileSettingModal, setProfileSettingModal] = useState(false);
-  const [user, setUser] = useState<string[]>([]);
+  const [newRelease, setNewRelease] = useState([]);
+  const [user, setUser] = useState<userType>({});
+  const [email, setEmail] = useState("");
+  const [nickname, setNickname] = useState("");
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data, error } = await supabase.from("users").select("*");
-        if (error) {
-          console.log("error =>", error);
-        } else {
-          console.log("data => ", data);
-          setUser(data);
-        }
-      } catch (error) {
-        console.log("this is error===>", error);
-      }
+    const gotfetchApiData = async () => {
+      const data = await getNewRelease();
+      setNewRelease(data);
     };
-    fetchData();
+    gotfetchApiData();
   }, []);
 
   // 유저 상세 설정 버튼 토글 함수 (점 세개))
@@ -47,11 +45,35 @@ function ProfilePage() {
     setOptionToggle(false);
   };
 
+  // 수퍼베이스 유저 정보 갸져오기
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem("user-storage"));
+    if (userData.state.user.user_metadata) {
+      const data: userType = userData.state.user.user_metadata;
+      console.log("User ID:", data);
+      setUser(data);
+    }
+  }, []);
+
+  const userDataUpdate = () => {
+    const updatedUser = { ...user, name: nickname, email: email };
+
+    localStorage.setItem("user-storage", JSON.stringify(updatedUser));
+    setUser(updatedUser);
+  };
+
+  // 수퍼베이스 유저 정보 업데이트
+  useEffect(() => {
+    const { data, error } = await supabase
+      .from("your_table")
+      .upsert({ id: user.id, column_name: "value" }, { onConflict: "id" });
+  });
+
   return (
     <main className="bg-zinc-950 rounded-2xl m-6 min-h-screen pb-10">
       <section className="w-full h-[250px] bg-gradient-to-b from-zinc-600 to-zinc-800 rounded-t-2xl flex flex-row items-center mb-8">
-        <figure className="relatvie group w-[200px] h-[200px] flex justify-center items-center text-7xl text-zinc-500 bg-zinc-800 shadow-zinc-900 shadow-lg rounded-full ml-10">
-          <HiMiniUser className=" opacity-100 group-hover:opacity-0" />
+        <figure className="relative group w-[200px] h-[200px] flex justify-center items-center text-7xl text-zinc-500 bg-zinc-800 shadow-zinc-900 shadow-lg rounded-full ml-10">
+          <HiMiniUser className="opacity-100 group-hover:opacity-0" />
           <button
             type="button"
             onClick={handleProfileSetting}
@@ -108,7 +130,7 @@ function ProfilePage() {
                 <IoIosClose />
               </button>
             </article>
-            <article className="w-full flex flex-row items-center gap-5">
+            <article className="w-full flex flex-row items-center gap-20">
               <figure className="group w-[180px] h-[180px] flex justify-center items-center text-7xl text-zinc-500 bg-zinc-800 shadow-zinc-900 shadow-lg rounded-full">
                 <HiMiniUser className="absolute" />
                 <article className="absolute flex flex-col justify-center opacity-100 group-hover:opacity-100 text-white text-sm gap-2">
@@ -120,13 +142,33 @@ function ProfilePage() {
                   <span>사진 삭제</span>
                 </article>
               </figure>
-              <article className="w-[220px]flex flex-col justify-center">
-                <form className="flex flex-col justify-end items-end gap-2">
-                  <input
-                    type="text"
-                    className="bg-zinc-700 w-[280px] py-2 rounded-sm"
-                  />
-                  <button className="bg-white py-3 px-8 rounded-full text-charcoal font-bold">
+              <article className="w-[220px] flex flex-col justify-center">
+                <form
+                  onSubmit={() => userDataUpdate()}
+                  className="flex flex-col justify-end items-end gap-3"
+                >
+                  <label className="flex flex-col">
+                    아이디
+                    <input
+                      type="text"
+                      value={nickname}
+                      onChange={e => setNickname(e.target.value)}
+                      className="bg-zinc-700 w-[250px] py-2 px-5 rounded-sm"
+                    />
+                  </label>
+                  <label className="flex flex-col">
+                    이메일
+                    <input
+                      type="text"
+                      value={email}
+                      onChange={e => setEmail(e.target.value)}
+                      className="bg-zinc-700 w-[250px] py-2 px-5 rounded-sm"
+                    />
+                  </label>
+                  <button
+                    type="submit"
+                    className="bg-white py-2 px-8 rounded-full text-charcoal font-bold"
+                  >
                     저장하기
                   </button>
                 </form>
@@ -135,95 +177,9 @@ function ProfilePage() {
           </article>
         </section>
       ) : null}
-      <AlbumList albumData={catData} albumListName={"좋아요한 곡"} />
-      <AlbumList albumData={catData} albumListName={"나만의 플레이리스트"} />
-    </main>
-  );
-}
-
-export default ProfilePage;
-
-export const catData: album[] = [
-  {
-    title: "cat",
-    artist: "Dog",
-    image: "/../../public/cat.jpeg",
-  },
-  {
-    title: "dog",
-    artist: "Cat",
-    image: "/../../public/dog.jpeg",
-  },
-  {
-    title: "bird",
-    artist: "Parrow",
-    image: "/../../public/cat.jpeg",
-  },
-  {
-    title: "dwarf",
-    artist: "Dog",
-    image: "/../../public/cat.jpeg",
-  },
-  {
-    title: "banana",
-    artist: "Cat",
-    image: "/../../public/cat.jpeg",
-  },
-  {
-    title: "yam",
-    artist: "Dog",
-    image: "/../../public/cat.jpeg",
-  },
-  {
-    title: "pup",
-    artist: "Cat",
-    image: "/../../public/cat.jpeg",
-  },
-];
-
-function ProfilePage() {
-  const [toggle, setToggle] = useState(false);
-
-  const handleSettingToggle = () => {
-    setToggle(!toggle);
-  };
-
-  const newRelease = getNewRelease();
-
-  return (
-    <main className=" bg-zinc-950 rounded-2xl m-6 min-h-screen pb-10">
-      <section className="w-full h-[250px] bg-gradient-to-b from-zinc-600 to-zinc-800 rounded-t-2xl flex flex-row items-center mb-8">
-        <figure className="w-[200px] h-[200px] flex justify-center items-center text-7xl text-zinc-500 bg-zinc-800 drop-shadow-md rounded-full ml-10">
-          <HiMiniUser />{" "}
-          {/* 여기에 useState를 사용해서 사용자 프로필 사진 반환 */}
-        </figure>
-        <section className="text-white ml-10">
-          <p className="text-[14px]">프로필</p>
-          <h1 className="text-7xl font-black mt-3">sm</h1>
-          <p className="text-[14px] font-normal mt-2">좋아요한 앨범 수 개</p>
-        </section>
-      </section>
-      <button
-        type="button"
-        onClick={handleSettingToggle}
-        className=" hover:cursor-pointer"
-      >
-        <AiOutlineEllipsis className="text-zinc-400 text-4xl ml-10 hover:text-zinc-100" />
-      </button>
-      {toggle ? (
-        <section className="absolute z-10 w-[160px] h-[100px] bg-zinc-800 rounded-md ml-10 text-left text-white p-1">
-          <p className="h-1/2 flex items-center pl-3 gap-3 hover:bg-zinc-700">
-            <FaPen />
-            프로필 수정
-          </p>
-          <p className="h-1/2 flex items-center pl-3 gap-3 hover:bg-zinc-700">
-            <RiFileCopyLine />
-            프로필 링크 복사
-          </p>
-        </section>
-      ) : null}
-      <AlbumList albumData={newRelease} albumListName={"좋아요한 곡"} />
-      <AlbumList albumData={newRelease} albumListName={"나만의 플레이리스트"} />
+      <article>
+        <AlbumList albumListName={"최신 앨범"} albumData={newRelease} />
+      </article>
     </main>
   );
 }
