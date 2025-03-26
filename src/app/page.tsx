@@ -5,8 +5,9 @@ import {
   getPublicAccessToken,
   getNewRelease,
 } from "@/app/api/spotify/route";
-
 import { SpotifyAlbum } from "@/types/album";
+// import SearchBar from "@/components/SearchBar";
+
 export default async function Home() {
   const token: string = await getPublicAccessToken();
   const newRelease: SpotifyAlbum[] = await getNewRelease();
@@ -29,6 +30,7 @@ export default async function Home() {
       <article>
         <AlbumList albumListName={"카테고리 2"} albumData={newRelease} />
       </article>
+      {/* <SearchBar /> */}
     </section>
   );
 }
