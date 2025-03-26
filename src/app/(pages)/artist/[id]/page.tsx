@@ -1,13 +1,14 @@
 import Image from "next/image";
-import { getArtist } from "@/app/api/spotify/route";
-
+import { getArtist,getAritstAlbum } from "@/app/api/spotify/route";
+import AlbumList from "@/components/AlbumList";
 export default async function ArtistDetailPage({
   params,
 }: {
   params: { id: string };
 }) {
   const artist = await getArtist(params.id);
-  console.log(artist);
+  
+  // console.log(artist);
   return (
     <main className="bg-zinc-950 rounded-2xl m-6 min-h-screen pb-10">
       <section className="flex flex-col items-center mb-8 mx-8">
@@ -27,6 +28,7 @@ export default async function ArtistDetailPage({
             장르: {artist.genres.length > 0 ? artist.genres.join(", ") : "없음"}
           </p>
         </div>
+        <AlbumList albumListName="아티스트의 앨범" albumData={albums} />
       </section>
     </main>
   );

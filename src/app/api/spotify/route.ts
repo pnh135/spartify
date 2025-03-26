@@ -1,4 +1,3 @@
-
 import { SpotifyAlbum } from "@/types/album";
 
 const APP_TOKEN_URL = "https://accounts.spotify.com/api/token";
@@ -83,7 +82,18 @@ export async function getArtist(id: string) {
   return res.json();
 }
 
-// export async function getAritstAlbum(id:string){
-//   const accessToken=await getPublicAccessToken();
-//   const res=await fetch(`https://api.spotify.com/`)
-// }
+export async function getAritstAlbum(id: string) {
+  const accessToken = await getPublicAccessToken();
+  const res = await fetch(
+    `https://api.spotify.com/v1/artists/${id}https://api.spotify.com/v1/artists/${id}/albums?include_groups=album,single&market=US&limit=50`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    },
+  );
+
+  if (!res.ok) throw new Error("Failed to fetch artist albums");
+
+  return res.json();
+}
