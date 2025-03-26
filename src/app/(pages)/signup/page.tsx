@@ -10,8 +10,6 @@ import UserForm from "@/components/auth/UserForm";
 function SignupPage() {
   const router = useRouter();
 
-  useLikeAlbum();
-
   const handleSignup = async (data: {
     email: string;
     password: string;

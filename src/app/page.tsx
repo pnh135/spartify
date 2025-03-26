@@ -28,10 +28,8 @@ export default async function Home() {
         />
       </article>
       <article>
-        <AlbumList albumListName="카테고리 2" albumData={newRelease} />
+        <LikeAlbumList />
       </article>
-
-      <LikeAlbumList />
     </section>
   );
 }
