@@ -6,7 +6,7 @@ import {
   getNewRelease,
 } from "@/app/api/spotify/route";
 import { SpotifyAlbum } from "@/types/album";
-// import SearchBar from "@/components/SearchBar";
+import LikeAlbumList from "@/components/LikeAlbumList";
 
 export default async function Home() {
   const token: string = await getPublicAccessToken();
@@ -18,7 +18,7 @@ export default async function Home() {
   return (
     <section className="p-2 flex flex-col gap-4">
       <article>
-        <AlbumList albumListName={"최신앨범"} albumData={newRelease} />
+        <AlbumList albumListName="최신앨범" albumData={newRelease} />
       </article>
 
       <article>
@@ -28,9 +28,10 @@ export default async function Home() {
         />
       </article>
       <article>
-        <AlbumList albumListName={"카테고리 2"} albumData={newRelease} />
+        <AlbumList albumListName="카테고리 2" albumData={newRelease} />
       </article>
-      {/* <SearchBar /> */}
+
+      <LikeAlbumList />
     </section>
   );
 }

@@ -85,6 +85,7 @@ export default function UserSettingModal({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setProfileSettingModal(false);
     handleImgUpload();
     handleResetImgPreview();
     handleUpdateUserData({
@@ -125,17 +126,21 @@ export default function UserSettingModal({
               <article className="w-full flex flex-row items-center gap-10">
                 {/** figure같은 것도 공통 컴포넌트 가능!! */}
                 <figure className="relative group w-[180px] h-[180px] flex justify-center items-center text-7xl text-zinc-500 bg-zinc-800 shadow-zinc-900 shadow-lg rounded-full">
-                  <HiMiniUser className="absolute" />
-                  <article className="absolute flex flex-col justify-center opacity-100 group-hover:opacity-100 text-white text-sm gap-2">
-                    사진 선택
-                    <label>
+                  {imagePreview === "" ? (
+                    <HiMiniUser className="absolute" />
+                  ) : (
+                    <Image
+                      src={imagePreview || "/default-image.png"}
+                      alt={""}
+                      width={300}
+                      height={300}
+                      className="w-[180px] h-[180px] rounded-full text-sm group-hover:opacity-20"
+                    />
+                  )}
+
+                  <article className="absolute flex flex-col justify-center items-center opacity-100 group-hover:opacity-100 text-white text-sm gap-5">
+                    <label htmlFor="file-upload" className="hover:underline">
                       이미지 추가
-                      <Image
-                        src={imagePreview || "/default-image.png"}
-                        alt={"미리보기 실패"}
-                        width={300}
-                        height={300}
-                      />
                     </label>
                     <input
                       type="file"
@@ -145,10 +150,17 @@ export default function UserSettingModal({
                         handleImgPreview(e);
                       }}
                       ref={imgRef}
-                      required
+                      id="file-upload"
+                      className="hidden"
                     />
                     <HiOutlinePencil className="text-5xl" />
-                    <span>사진 삭제</span>
+                    <button
+                      type="button"
+                      onClick={() => handleResetImgPreview()}
+                      className="hover:underline"
+                    >
+                      이미지 삭제
+                    </button>
                   </article>
                 </figure>
                 <article className="w-[250px] flex flex-col justify-center gap-5">
