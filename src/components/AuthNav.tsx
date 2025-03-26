@@ -3,8 +3,9 @@
 import { supabase } from "@/app/api/supabase/supabase";
 import useUserStore, { handleAuthStateChange } from "@/store/useUserstore";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+
 import Swal from "sweetalert2";
 import SearchBar from "./SearchBar";
 
@@ -14,31 +15,44 @@ interface SupabaseUnsubscribable {
 
 const AuthNav = () => {
   // zustand 스토어 에서 상태, 함수 가져오기
-  const { isLogin } = useUserStore();
+  const { isLogin, setUser } = useUserStore();
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
-  // 컴포넌트 마운트 시 인증 상태 변경 리스너 설정
+  // 컴포넌트 마운트 시 먼저 현재 세션 확인 후 리스너 설정
   useEffect(() => {
     let subscription: SupabaseUnsubscribable | null = null;
-
-    // 비동기 함수로 인증 상태 변경 리스너 설정
-    const setupAuthListener = async () => {
+   
+    const setupAuth = async () => {
       try {
+        // 현재 세션을 직접 확인하여 상태 업데이트
+        const { data: sessionData } = await supabase.auth.getSession();
+        if (sessionData.session?.user) {
+          console.log("즉시 세션 확인: 사용자 로그인 상태", sessionData.session.user.email);
+          setUser(sessionData.session.user);
+        } else {
+          console.log("즉시 세션 확인: 로그인된 사용자 없음");
+        }
+        
+        // 인증 상태 변경 리스너 설정
         const authListener = await handleAuthStateChange();
         subscription = authListener.subscription;
       } catch (error) {
-        console.error("인증 리스너 설정 중 오류:", error);
+        console.error("인증 확인 중 오류:", error);
+      } finally {
+        // 인증 확인 작업 완료
+        setIsCheckingAuth(false);
       }
     };
-
-    setupAuthListener();
-
+    
+    setupAuth();
+    
     // 컴포넌트 언마운트 시 리스너 제거
     return () => {
       if (subscription) {
         subscription.unsubscribe();
       }
     };
-  }, []);
+  }, [setUser]);
 
   const pathname: string = usePathname();
 
@@ -75,6 +89,15 @@ const AuthNav = () => {
       console.error("로그아웃 중 오류 발생:", error);
     }
   };
+
+  // 인증 확인 중에는 로딩 표시 (선택적)
+  if (isCheckingAuth) {
+    return (
+      <section className="flex gap-7">
+        <p className="text-gray-400">로그인 중...</p>
+      </section>
+    );
+  }
 
   if (pathname === "/login" || pathname === "/signup") return <></>;
 
