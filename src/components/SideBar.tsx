@@ -2,9 +2,13 @@
 
 import useUserStore from "@/store/useUserstore";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 function SideBar() {
   const { isLogin } = useUserStore();
+  const pathname: string = usePathname();
+
+  if (pathname === "/login" || pathname === "/signup") return <></>;
 
   return (
     <section className="m-2 mt-4 p-4 text-center bg-gunmetal border border-transparent rounded-2xl h-full">
