@@ -7,6 +7,8 @@ import { HiMiniUser, HiOutlinePencil } from "react-icons/hi2";
 import { supabase } from "@/app/api/supabase/supabase";
 import { handleUpdateUserData } from "@/utils/updateUserData";
 
+//함수 여러개인건 하나로 묶기! button같은 거 이벤트 실행 같은 거 할때
+
 interface UserSettingModalProps {
   profileSettingModal: boolean;
   setProfileSettingModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -117,7 +119,7 @@ export default function UserSettingModal({
                 <IoIosClose />
               </button>
             </article>
-            <form // 함수로 하나로 묶기!!!
+            <form
               onSubmit={e => {
                 handleSubmit(e);
               }}
@@ -144,7 +146,7 @@ export default function UserSettingModal({
                     </label>
                     <input
                       type="file"
-                      accept="image/*"
+                      accept="image/png"
                       onChange={e => {
                         handleImageChange(e);
                         handleImgPreview(e);
