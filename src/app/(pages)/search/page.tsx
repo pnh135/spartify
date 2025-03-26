@@ -2,7 +2,7 @@ import { getSearchResults } from "@/app/api/spotify/route";
 import AlbumList from "@/components/AlbumList";
 import ArtistList from "@/components/ArtistList";
 import { SpotifyAlbum } from "@/types/album";
-
+import { SpotifyArtist } from "@/types/artist";
 export default async function SearchPage({
   searchParams,
 }: {
@@ -16,9 +16,9 @@ export default async function SearchPage({
 
   const data = await getSearchResults(query);
   const albums: SpotifyAlbum[] = data.albums?.items || [];
-  const artists = data.artists?.items || [];
+  const artists: SpotifyArtist[] = data.artists?.items || [];
 
-  // console.log(albums);
+  // console.log(artists);
   console.log(artists);
   return (
     <main className="p-6 bg-charcoal min-h-screen">

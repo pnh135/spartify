@@ -8,6 +8,14 @@ export interface SpotifyArtistFromAlbum {
   }[];
 }
 
-// export interface SpotifyArtist{
-
-// }
+export interface SpotifyArtist {
+  id: string;
+  name: string;
+  images: {
+    url: string;
+    width: number;
+    height: number;
+  }[];
+  genres: string[];
+  uri: string;
+}
