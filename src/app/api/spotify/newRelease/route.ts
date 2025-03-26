@@ -6,7 +6,7 @@ export async function GET() {
     const albums = await getNewRelease();
     return NextResponse.json(albums);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return NextResponse.json({ error: "신보 조회 실패" }, { status: 500 });
   }
 }

@@ -4,6 +4,7 @@ import Link from "next/link";
 import SideBar from "@/components/SideBar";
 import QueryProvider from "../providers/QueryProvider";
 import AuthNav from "@/components/AuthNav";
+import SearchBar from "@/components/SearchBar";
 
 export const metadata: Metadata = {
   title: "Spartify",
@@ -17,7 +18,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="ko">
       <body className="bg-charcoal text-white">
@@ -31,13 +31,10 @@ export default function RootLayout({
               </Link>
             </section>
             <section>
-              <input
-                placeholder="What do you want to play?"
-                className="bg-gunmetal border border-transparent rounded-full h-10 px-10 focus:ring-2 focus:ring-inset focus:ring-gray-600 focus:outline-none hidden md:block " /* 모바일 사이즈부터 숨김 */
-              />
+              <SearchBar />
             </section>
-           
-           <AuthNav />
+
+            <AuthNav />
           </nav>
         </header>
 

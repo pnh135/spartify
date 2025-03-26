@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getNewRelease, getPublicAccessToken } from "../route";
 import { getSeveralArtist } from "../route";
 import { SpotifyAlbum } from "@/types/album";
+
 export async function GET() {
   try {
     const token = await getPublicAccessToken();
