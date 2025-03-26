@@ -33,8 +33,12 @@ function useLikeAlbum() {
   const sortArr: arr = Object.entries(likedRank);
   // 내림차순으로 정렬
   const sortLike = Object.fromEntries(sortArr.sort((a, b) => b[1] - a[1]));
-  // 검색하기 위해 하나의 문자로 합치기
+  // 검색하기 위해 문자 배열로 만들기
   const sortString = sortArr.map(([key]) => `${key}`);
+
+  console.log("sortArr", sortArr);
+  console.log("sortLike", sortLike);
+  console.log("sortString", sortString);
 
   return sortString;
 }

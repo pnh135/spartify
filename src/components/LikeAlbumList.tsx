@@ -13,7 +13,7 @@ function LikeAlbumList() {
 
   console.log(sortString);
   console.log(albums);
-  return <AlbumList albumData={albums} albumListName="좋아요 순위" />;
+  //   return <AlbumList albumData={albums} albumListName="좋아요 순위" />;
 }
 
 export default LikeAlbumList;
