@@ -12,7 +12,7 @@ interface SupabaseUnsubscribable {
 
 const AuthNav = () => {
   // zustand 스토어 에서 상태, 함수 가져오기
-  const { isLogin, clearUser } = useUserStore();
+  const { isLogin } = useUserStore();
 
   // 컴포넌트 마운트 시 인증 상태 변경 리스너 설정
   useEffect(() => {
@@ -55,7 +55,6 @@ const AuthNav = () => {
 
     try {
       await supabase.auth.signOut();
-      clearUser();
       Swal.fire({
         title: "로그아웃 완료",
         text: "성공적으로 로그아웃되었습니다.",
