@@ -19,11 +19,13 @@ export async function getPublicAccessToken(): Promise<string> {
   });
 
   const data = await res.json();
+
   return data.access_token;
 }
 
 export async function getNewRelease() {
   const accessToken = await getPublicAccessToken();
+
   const res = await fetch(
     "https://api.spotify.com/v1/browse/new-releases?limit=20",
     {
@@ -36,6 +38,7 @@ export async function getNewRelease() {
   if (!res.ok) throw new Error("Failed to fetch new releases");
 
   const data = await res.json();
+  console.log(data);
   return data.albums.items;
 }
 
