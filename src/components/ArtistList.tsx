@@ -31,6 +31,8 @@ export default function ArtistList({
               <article className="text-white hover:bg-zinc-800 p-3 rounded-md group">
                 <figure className="w-[180px] h-[180px] overflow-hidden mb-2 rounded-md relative">
                   <Image
+                    priority
+                    quality={100}
                     src={artist.images[0]?.url ?? "/placeholder.png"}
                     alt={artist.name}
                     width={400}
