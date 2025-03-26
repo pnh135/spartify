@@ -4,6 +4,7 @@ import { getNewRelease } from "../route";
 export async function GET() {
   try {
     const albums = await getNewRelease();
+    console.log(albums);
     return NextResponse.json(albums);
   } catch (error) {
     console.error(error);

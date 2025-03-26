@@ -1,17 +1,17 @@
 "use client";
-// 마이페이지에서 사용자와의 상호작용이 필요하니 클라이언트 컴포넌트로 구현
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineEllipsis } from "react-icons/ai";
 import { HiMiniUser, HiOutlinePencil } from "react-icons/hi2";
 import { RiFileCopyLine } from "react-icons/ri";
-import AlbumList from "../../../components/AlbumList";
+import AlbumList from "@/components/AlbumList";
 import { getNewRelease } from "@/utils/fetchNewRelease";
 import UserSettingModal from "@/components/UserSettingModal";
 import type { SpotifyAlbum } from "@/types/album";
 import { getUserInfo } from "@/utils/getUserData";
 import { handleUpdateUserData } from "@/utils/updateUserData";
 import Image from "next/image";
+import useUserStore from "@/store/useUserstore";
 
 //useEffect 최대한 없애고 tanstackQuery하기!!! 무조건!!!!!!!!!!!!!!무조건!!!!!!!!!!!!!
 export interface userType {
@@ -29,13 +29,23 @@ function ProfilePage() {
   const [profileSettingModal, setProfileSettingModal] =
     useState<boolean>(false);
 
+  interface UserMetadata {
+    name?: string;
+  }
+
+  interface User {
+    user_metadata: UserMetadata;
+  }
+
+  const { user } = useUserStore() as { user: User | null };
+  const name = user?.user_metadata?.name || "";
+
   useEffect(() => {
-    // useEffect 최대한 없애고 tanstackQuery하기!!! 무조건!!!!!!!!!!!!!!무조건!!!!!!!!!!!!!
-    const gotfetchApiData = async () => {
+    const fetchData = async () => {
       const data = await getNewRelease();
       setNewRelease(data);
     };
-    gotfetchApiData();
+    fetchData();
   }, []);
 
   // // 수퍼베이스 유저 정보 갸져오기
@@ -54,14 +64,12 @@ function ProfilePage() {
     setOptionToggle(prev => !prev); // 함수형 업데이트 활용 (prev 쓰는거!!)
   };
 
-  // 유저 상세 설정 모달 토글 함수
   const handleProfileSetting = () => {
     setProfileSettingModal(prev => !prev);
     setOptionToggle(false);
   };
 
   return (
-    // 색깔 통일 필요!!!!!!
     <main className="bg-zinc-950 rounded-2xl m-6 min-h-screen pb-10">
       <section className="w-full h-[250px] bg-gradient-to-b from-zinc-600 to-zinc-800 rounded-t-2xl flex flex-row items-center mb-8">
         <figure className="relative group w-[200px] h-[200px] flex justify-center items-center text-7xl text-zinc-500 bg-zinc-800 shadow-zinc-900 shadow-lg rounded-full ml-10">
@@ -84,7 +92,6 @@ function ProfilePage() {
             <HiOutlinePencil className="text-6xl" />
             <p className="text-base">사진 선택</p>
           </button>
-          {/* 여기에 useState를 사용해서 사용자 프로필 사진 반환 */}
         </figure>
         <section className="text-white ml-10">
           <p className="text-[14px]">프로필</p>
@@ -92,15 +99,16 @@ function ProfilePage() {
           <p className="text-[14px] font-normal mt-3">좋아요한 앨범 수 개</p>
         </section>
       </section>
+
       <section className="relative">
         <button
           type="button"
           onClick={handleOptionToggle}
-          className=" hover:cursor-pointer"
+          className="hover:cursor-pointer"
         >
           <AiOutlineEllipsis className="text-zinc-400 text-4xl ml-10 hover:text-zinc-100" />
         </button>
-        {optionToggle ? (
+        {optionToggle && (
           <section className="absolute z-10 w-[160px] h-[100px] bg-zinc-800 rounded-md ml-10 text-left text-white p-1">
             <button
               type="button"
@@ -115,9 +123,8 @@ function ProfilePage() {
               프로필 링크 복사
             </button>
           </section>
-        ) : null}
+        )}ad
       </section>
-      {/** html요소가 많이 보이면 좋은 리액트 코드가 아니다!!!!  컴포넌트화 필요!!!!!!!!!!!!!!!!!!!!!!!! */}
 
       {/* 프로필 수정 모달창 */}
       {profileSettingModal && (
@@ -134,7 +141,7 @@ function ProfilePage() {
       )}
 
       <article>
-        <AlbumList albumListName={"최신 앨범"} albumData={newRelease} />
+        <AlbumList albumListName="최신 앨범" albumData={newRelease} />
       </article>
     </main>
   );
