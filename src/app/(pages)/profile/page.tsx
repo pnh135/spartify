@@ -1,16 +1,18 @@
 "use client";
 // 마이페이지에서 사용자와의 상호작용이 필요하니 클라이언트 컴포넌트로 구현
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineEllipsis } from "react-icons/ai";
-import { HiOutlinePencil, HiMiniUser } from "react-icons/hi2";
+import { HiMiniUser, HiOutlinePencil } from "react-icons/hi2";
 import { RiFileCopyLine } from "react-icons/ri";
-import { IoIosClose } from "react-icons/io";
 import AlbumList from "../../../components/AlbumList";
 import { getNewRelease } from "@/utils/fetchNewRelease";
-//   주석달기
+import { supabase } from "@/app/api/supabase/supabase";
+import useUserStore from "@/store/useUserstore";
+import UserSettingModal from "@/components/UserSettingModal";
+import type { SpotifyAlbum } from "@/types/album";
 
-interface userType {
+export interface userType {
   email: string;
   email_verified: boolean;
   name: string;
@@ -19,14 +21,13 @@ interface userType {
 }
 
 function ProfilePage() {
-  const [optionToggle, setOptionToggle] = useState(false);
-  const [profileSettingModal, setProfileSettingModal] = useState(false);
-  const [newRelease, setNewRelease] = useState([]);
-  const [user, setUser] = useState<userType>({});
-  const [email, setEmail] = useState("");
-  const [nickname, setNickname] = useState("");
+  const [optionToggle, setOptionToggle] = useState<boolean>(false);
+  const [newRelease, setNewRelease] = useState<SpotifyAlbum[]>([]);
+  const [profileSettingModal, setProfileSettingModal] =
+    useState<boolean>(false);
 
   useEffect(() => {
+    // useEffect 최대한 없애고 tanstackQuery하기!!! 무조건!!!!!!!!!!!!!!무조건!!!!!!!!!!!!!
     const gotfetchApiData = async () => {
       const data = await getNewRelease();
       setNewRelease(data);
@@ -34,9 +35,23 @@ function ProfilePage() {
     gotfetchApiData();
   }, []);
 
+  // useUserStore에서 user 가져오기
+  const { user } = useUserStore();
+  // const email = user.user_metadata.email || ""; // optional chaining이 있어야 하나?????? 고민 고고!
+  const name = user.user_metadata.name || "";
+  console.log("현재 세션 유저:", user);
+
+  // 수퍼베이스 유저 정보 갸져오기
+  useEffect(() => {
+    //// useEffect 최대한 없애고 tanstackQuery하기!!! 무조건!!!!!!!!!!!!!!무조건!!!!!!!!!!!!!
+    const fetchUserData = async () => {
+      const userData = await supabase.from;
+    };
+  }, []);
+
   // 유저 상세 설정 버튼 토글 함수 (점 세개))
   const handleOptionToggle = () => {
-    setOptionToggle(!optionToggle);
+    setOptionToggle(!optionToggle); // 함수형 업데이트 활용 (prev 쓰는거!!)
   };
 
   // 유저 상세 설정 모달 토글 함수
@@ -45,31 +60,8 @@ function ProfilePage() {
     setOptionToggle(false);
   };
 
-  // 수퍼베이스 유저 정보 갸져오기
-  useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem("user-storage"));
-    if (userData.state.user.user_metadata) {
-      const data: userType = userData.state.user.user_metadata;
-      console.log("User ID:", data);
-      setUser(data);
-    }
-  }, []);
-
-  const userDataUpdate = () => {
-    const updatedUser = { ...user, name: nickname, email: email };
-
-    localStorage.setItem("user-storage", JSON.stringify(updatedUser));
-    setUser(updatedUser);
-  };
-
-  // 수퍼베이스 유저 정보 업데이트
-  useEffect(() => {
-    const { data, error } = await supabase
-      .from("your_table")
-      .upsert({ id: user.id, column_name: "value" }, { onConflict: "id" });
-  });
-
   return (
+    // 색깔 통일 필요!!!!!!
     <main className="bg-zinc-950 rounded-2xl m-6 min-h-screen pb-10">
       <section className="w-full h-[250px] bg-gradient-to-b from-zinc-600 to-zinc-800 rounded-t-2xl flex flex-row items-center mb-8">
         <figure className="relative group w-[200px] h-[200px] flex justify-center items-center text-7xl text-zinc-500 bg-zinc-800 shadow-zinc-900 shadow-lg rounded-full ml-10">
@@ -86,7 +78,7 @@ function ProfilePage() {
         </figure>
         <section className="text-white ml-10">
           <p className="text-[14px]">프로필</p>
-          <h1 className="text-7xl font-black mt-3">{user.name}</h1>
+          <h1 className="text-7xl font-black mt-3">{name}</h1>
           <p className="text-[14px] font-normal mt-2">좋아요한 앨범 수 개</p>
         </section>
       </section>
@@ -115,68 +107,13 @@ function ProfilePage() {
           </section>
         ) : null}
       </section>
+      {/** html요소가 많이 보이면 좋은 리액트 코드가 아니다!!!!  컴포넌트화 필요!!!!!!!!!!!!!!!!!!!!!!!! */}
 
       {/* 프로필 수정 모달창 */}
-      {profileSettingModal ? (
-        <section className="fixed inset-0 z-20 min-h-screen min-w-screen flex justify-center items-center">
-          <article className="bg-zinc-800 p-6 flex flex-col gap-5 rounded-lg pb-10">
-            <article className="flex flex-row justify-between">
-              <h2 className="text-lg ">프로필 세부 정보</h2>
-              <button
-                type="button"
-                onClick={() => setProfileSettingModal(false)}
-                className="text-2xl"
-              >
-                <IoIosClose />
-              </button>
-            </article>
-            <article className="w-full flex flex-row items-center gap-20">
-              <figure className="group w-[180px] h-[180px] flex justify-center items-center text-7xl text-zinc-500 bg-zinc-800 shadow-zinc-900 shadow-lg rounded-full">
-                <HiMiniUser className="absolute" />
-                <article className="absolute flex flex-col justify-center opacity-100 group-hover:opacity-100 text-white text-sm gap-2">
-                  <label>
-                    사진 선택
-                    <input type="file" />
-                  </label>
-                  <HiOutlinePencil className="text-5xl" />
-                  <span>사진 삭제</span>
-                </article>
-              </figure>
-              <article className="w-[220px] flex flex-col justify-center">
-                <form
-                  onSubmit={() => userDataUpdate()}
-                  className="flex flex-col justify-end items-end gap-3"
-                >
-                  <label className="flex flex-col">
-                    아이디
-                    <input
-                      type="text"
-                      value={nickname}
-                      onChange={e => setNickname(e.target.value)}
-                      className="bg-zinc-700 w-[250px] py-2 px-5 rounded-sm"
-                    />
-                  </label>
-                  <label className="flex flex-col">
-                    이메일
-                    <input
-                      type="text"
-                      value={email}
-                      onChange={e => setEmail(e.target.value)}
-                      className="bg-zinc-700 w-[250px] py-2 px-5 rounded-sm"
-                    />
-                  </label>
-                  <button
-                    type="submit"
-                    className="bg-white py-2 px-8 rounded-full text-charcoal font-bold"
-                  >
-                    저장하기
-                  </button>
-                </form>
-              </article>
-            </article>
-          </article>
-        </section>
-      ) : null}
+      <UserSettingModal
+        profileSettingModal={profileSettingModal}
+        setProfileSettingModal={setProfileSettingModal}
+      />
       <article>
         <AlbumList albumListName={"최신 앨범"} albumData={newRelease} />
       </article>
