@@ -38,7 +38,6 @@ export const handleAuthStateChange = async (): Promise<AuthListenerData> => {
 
   const { data: unsubscribe } = supabase.auth.onAuthStateChange(
     (event: string, session: Session | null) => {
-      console.log(session);
       if (event === "SIGNED_IN" && session) {
         setUser(session.user); // 사용자 정보 저장, isLogin 을 true로 변경
       } else if (event === "SIGNED_OUT") {
