@@ -5,11 +5,14 @@ import React, { useState } from "react";
 import { authSignUp } from "@/app/api/supabase/userAuth";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
+import useLikeAlbum from "@/hooks/useLikeAlbum";
 function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [nickname, setNickname] = useState("");
   const router = useRouter();
+
+  useLikeAlbum();
 
   const handleSignUp = async () => {
     if (!email || !password || !nickname) {
@@ -45,9 +48,8 @@ function SignupPage() {
         confirmButtonText: "확인",
       });
       router.push("/login");
-
     } catch (error: any) {
-       Swal.fire({
+      Swal.fire({
         title: "오류 발생",
         text: error.message || "알 수 없는 오류가 발생했습니다.",
         icon: "error",

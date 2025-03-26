@@ -17,7 +17,21 @@ function useLikeAlbum() {
     },
   });
 
-  return { data };
+  const sortLike = () => {
+    let likedRank = {};
+
+    const getLikedNumber = data?.forEach(item => {
+      if (likedRank[item.album_id]) {
+        likedRank[item.album_id] += 1;
+      } else {
+        likedRank[item.album_id] = 1;
+      }
+    });
+
+    const sortLike = getLikedNumber.sort((a, b) => a - b);
+    console.log(sortLike);
+  };
+  return { data, sortLike };
 }
 
 export default useLikeAlbum;
