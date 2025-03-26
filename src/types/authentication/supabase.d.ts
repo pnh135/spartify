@@ -34,7 +34,7 @@ export type Database = {
   };
   public: {
     Tables: {
-      likedAlbums: {
+      liked_albums: {
         Row: {
           album_id: string | null;
           created_at: string;
@@ -53,40 +53,59 @@ export type Database = {
           id?: number;
           user_id?: string | null;
         };
-        Relationships: [
-          {
-            foreignKeyName: "likedTables_user_id_fkey";
-            columns: ["user_id"];
-            isOneToOne: false;
-            referencedRelation: "users";
-            referencedColumns: ["user_id"];
-          },
-        ];
+        Relationships: [];
+      };
+      spotify_token: {
+        Row: {
+          access_token: string;
+          created_at: string;
+          expires_at: string;
+          refresh_token: string;
+          scope: string | null;
+          token_type: string | null;
+          userId: number;
+        };
+        Insert: {
+          access_token: string;
+          created_at?: string;
+          expires_at: string;
+          refresh_token: string;
+          scope?: string | null;
+          token_type?: string | null;
+          userId?: number;
+        };
+        Update: {
+          access_token?: string;
+          created_at?: string;
+          expires_at?: string;
+          refresh_token?: string;
+          scope?: string | null;
+          token_type?: string | null;
+          userId?: number;
+        };
+        Relationships: [];
       };
       users: {
         Row: {
           created_at: string;
           email: string | null;
-          id: number;
           name: string | null;
-          profile_images: string | null;
-          user_id: string | null;
+          profile_img: string | null;
+          user_id: string;
         };
         Insert: {
           created_at?: string;
           email?: string | null;
-          id?: number;
           name?: string | null;
           profile_img?: string | null;
-          user_id?: string | null;
+          user_id?: string;
         };
         Update: {
           created_at?: string;
           email?: string | null;
-          id?: number;
           name?: string | null;
           profile_img?: string | null;
-          user_id?: string | null;
+          user_id?: string;
         };
         Relationships: [];
       };
