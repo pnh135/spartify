@@ -23,9 +23,7 @@ export default function RootLayout({
           <AuthNav />
         </header>
 
-        <aside className="fixed top-16 left-0 w-[240px] h-[calc(100vh-4rem)]">
-          <SideBar />
-        </aside>
+        <SideBar />
 
         <div className="ml-[240px] mt-16 h-[calc(100vh-4rem)] overflow-y-auto">
           <main className="bg-gunmetal m-4 border border-transparent rounded-lg">
