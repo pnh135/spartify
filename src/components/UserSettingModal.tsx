@@ -23,16 +23,7 @@ export default function UserSettingModal({
   const [nickname, setNickname] = useState<string>("");
   const [userEmail, setUserEmail] = useState<string>("");
   const [imageUrl, setImageUrl] = useState<File | null>(null);
-  const [thisUploadImgUrl, setThisUploadImgUrl] = useState<string>("");
   const imgRef = useRef<HTMLInputElement | null>(null); // useRef는 컴포넌트 안에서 DOM 요소나 값을 직접 참조!! ==> useState()를 사용할 때와 달리 input태그의 값에 직접 접근할 수 있어 불필요한 리렌더링을 줄일 수 있음
-
-  useEffect(() => {
-    if (!imageUrl) return; // imageUrl이 없을 경우 실행하지 않도록 방어 코드 추가
-    const fetchImageUrl = async () => {
-      await handleImgUpload();
-    };
-    fetchImageUrl();
-  }, [imageUrl]);
 
   const handleResetImgPreview = () => {
     setImagePreview("");
@@ -51,8 +42,12 @@ export default function UserSettingModal({
     if (!imageUrl) return;
 
     const file = imageUrl as File;
+    console.log("파일 업로드 시도 중:", file);
+
     const imageExt = file.name.split(".").pop(); // 확장자 추출
     let baseName = file.name.replace(`.${imageExt}`, ""); // 확장자 제거한 파일명
+    console.log("업로드할 파일 이름:", baseName, imageExt);
+
     // 1️⃣ 특수문자, 공백, 한글을 안전한 문자(_)로 변환
     baseName = baseName.replace(/[^a-zA-Z0-9._-]/g, "_");
     baseName = baseName.replace(/_+/g, "_"); // 연속된 _ 제거
@@ -64,11 +59,14 @@ export default function UserSettingModal({
     // 업로드 중 오류 발생 시 콘솔에 오류 메시지 출력
     if (error) {
       console.error("이미지 업로드 실패. 에러 발생 ==> ", error.message);
+      return;
     } else {
       console.log("이미지 업로드 성공:", data); // 업로드 성공 시 자축 메시지 콘솔에 출력
     }
     const postImgUrl = `https://wbbxeuloxzmatnfryegy.supabase.co/storage/v1/object/public/user-image/${data?.path}`; // 변수화!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 아니면 .env에 넣어놔도 굿
-    setThisUploadImgUrl(postImgUrl);
+    console.log("최종 업로드 경로:", `public/${baseName}.${imageExt}`);
+
+    return postImgUrl;
   };
 
   // 이미지 미리보기 함수
@@ -85,16 +83,26 @@ export default function UserSettingModal({
     setImagePreview(imgUrl);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  useEffect(() => {
+    if (!imageUrl) return; // imageUrl이 없을 경우 실행하지 않도록 방어 코드 추가
+    const fetchImageUrl = async () => {
+      await handleImgUpload();
+    };
+    fetchImageUrl();
+  }, [imageUrl]);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log("hellow!!!!!!");
     setProfileSettingModal(false);
-    handleImgUpload();
+    const profileImage: string = await handleImgUpload();
+    console.log("profileImage===>", profileImage);
     handleResetImgPreview();
     handleUpdateUserData({
       //이름 바꾸고
       name: nickname,
       email: userEmail,
-      imageUrl: thisUploadImgUrl ? thisUploadImgUrl : "이미지 없음", // imageUrl이 null일 경우를 고려
+      profileImg: profileImage,
     });
   };
 
@@ -128,11 +136,11 @@ export default function UserSettingModal({
               <article className="w-full flex flex-row items-center gap-10">
                 {/** figure같은 것도 공통 컴포넌트 가능!! */}
                 <figure className="relative group w-[180px] h-[180px] flex justify-center items-center text-7xl text-zinc-500 bg-zinc-800 shadow-zinc-900 shadow-lg rounded-full">
-                  {imagePreview === "" ? (
+                  {!imagePreview ? (
                     <HiMiniUser className="absolute" />
                   ) : (
                     <Image
-                      src={imagePreview || "/default-image.png"}
+                      src={imagePreview}
                       alt={""}
                       width={300}
                       height={300}
@@ -146,7 +154,7 @@ export default function UserSettingModal({
                     </label>
                     <input
                       type="file"
-                      accept="image/png"
+                      accept="image/*"
                       onChange={e => {
                         handleImageChange(e);
                         handleImgPreview(e);
