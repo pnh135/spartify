@@ -10,7 +10,6 @@ const publicAuth = Buffer.from(`${clientId}:${clientSecret}`).toString(
 export async function getPublicAccessToken(): Promise<string> {
   const res = await fetch(APP_TOKEN_URL, {
     method: "POST",
-    cache: "no-store",
     headers: {
       Authorization: `Basic ${publicAuth}`,
       "Content-Type": "application/x-www-form-urlencoded",
