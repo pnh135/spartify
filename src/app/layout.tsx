@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Link from "next/link";
+// import Link from "next/link";
 import SideBar from "@/components/SideBar";
 import QueryProvider from "@/providers/QueryProvider";
 import AuthNav from "@/components/AuthNav";
-import SearchBar from "@/components/SearchBar";
+// import SearchBar from "@/components/SearchBar";
 
 export const metadata: Metadata = {
   title: "Spartify",

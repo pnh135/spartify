@@ -19,16 +19,31 @@ const UserForm: React.FC<UserFormProps> = ({ isLogin, onSubmit }) => {
 
   // 로그인 스키마 정의
   const loginSchema = z.object({
-    email: z.string().min(1, "이메일을 입력해주세요.").email("유효한 이메일 주소를 입력해주세요."),
-    password: z.string().min(1, "비밀번호를 입력해주세요.").min(8, "비밀번호는 8자 이상이어야 합니다."),
+    email: z
+      .string()
+      .min(1, "이메일을 입력해주세요.")
+      .email("유효한 이메일 주소를 입력해주세요."),
+    password: z
+      .string()
+      .min(1, "비밀번호를 입력해주세요.")
+      .min(8, "비밀번호는 8자 이상이어야 합니다."),
   });
 
   // 회원가입 스키마 정의
   const signupSchema = z
     .object({
-      email: z.string().min(1, "이메일을 입력해주세요.").email("유효한 이메일 주소를 입력해주세요."),
-      userName: z.string().min(1, "닉네임을 입력해주세요.").min(3, "닉네임은 3글자 이상이어야 합니다."),
-      password: z.string().min(1, "비밀번호를 입력해주세요.").min(8, "비밀번호는 8자 이상이어야 합니다."),
+      email: z
+        .string()
+        .min(1, "이메일을 입력해주세요.")
+        .email("유효한 이메일 주소를 입력해주세요."),
+      userName: z
+        .string()
+        .min(1, "닉네임을 입력해주세요.")
+        .min(3, "닉네임은 3글자 이상이어야 합니다."),
+      password: z
+        .string()
+        .min(1, "비밀번호를 입력해주세요.")
+        .min(8, "비밀번호는 8자 이상이어야 합니다."),
       confirmPassword: z.string().min(1, "비밀번호 확인을 입력해주세요."),
     })
     .refine(data => data.password === data.confirmPassword, {
@@ -131,7 +146,7 @@ const UserForm: React.FC<UserFormProps> = ({ isLogin, onSubmit }) => {
 
   const onHandleDuplication = async () => {
     if (!userNameValue) return;
-    
+
     try {
       setIsChecking(true);
       const { data, error } = await checkNickname(userNameValue);
@@ -162,7 +177,7 @@ const UserForm: React.FC<UserFormProps> = ({ isLogin, onSubmit }) => {
         setCheckedDuplication(true);
       }
     } catch (error) {
-      console.error('닉네임 확인 오류:', error);
+      console.error("닉네임 확인 오류:", error);
       Swal.fire({
         title: "오류 발생",
         text: "중복 확인 중 오류가 발생했습니다.",
@@ -174,7 +189,7 @@ const UserForm: React.FC<UserFormProps> = ({ isLogin, onSubmit }) => {
       setIsChecking(false);
     }
   };
-  
+
   // 닉네임 변경 시 중복 확인 상태 초기화
   useEffect(() => {
     if (!isLogin) {
@@ -218,7 +233,10 @@ const UserForm: React.FC<UserFormProps> = ({ isLogin, onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(handleFormSubmit)} className="w-full space-y-2">
+    <form
+      onSubmit={handleSubmit(handleFormSubmit)}
+      className="w-full space-y-2"
+    >
       {/* 이메일 입력 필드 */}
       <div className="w-full relative pb-4">
         <label className="block text-offwhite text-sm mb-1">이메일</label>
@@ -229,7 +247,9 @@ const UserForm: React.FC<UserFormProps> = ({ isLogin, onSubmit }) => {
           {...register("email")}
         />
         {shouldShowError(currentEmail, errors.email?.message) && (
-          <p className="absolute -bottom-1 left-0 text-xs text-red-500">{errors.email?.message}</p>
+          <p className="absolute -bottom-1 left-0 text-xs text-red-500">
+            {errors.email?.message}
+          </p>
         )}
       </div>
 
@@ -243,7 +263,9 @@ const UserForm: React.FC<UserFormProps> = ({ isLogin, onSubmit }) => {
           {...register("password")}
         />
         {shouldShowError(currentPassword, errors.password?.message) && (
-          <p className="absolute -bottom-1 left-0 text-xs text-red-500">{errors.password?.message}</p>
+          <p className="absolute -bottom-1 left-0 text-xs text-red-500">
+            {errors.password?.message}
+          </p>
         )}
       </div>
 
@@ -252,14 +274,19 @@ const UserForm: React.FC<UserFormProps> = ({ isLogin, onSubmit }) => {
         <>
           {/* 비밀번호 확인 필드 */}
           <div className="w-full relative pb-4">
-            <label className="block text-offwhite text-sm mb-1">비밀번호 확인</label>
+            <label className="block text-offwhite text-sm mb-1">
+              비밀번호 확인
+            </label>
             <input
               type="password"
               className="w-full bg-gunmetal text-offwhite border border-offwhite rounded py-2 px-3 placeholder:text-xs text-sm"
               placeholder="비밀번호 확인"
               {...register("confirmPassword")}
             />
-            {shouldShowError(currentConfirmPassword, (errors as any).confirmPassword?.message) && (
+            {shouldShowError(
+              currentConfirmPassword,
+              (errors as any).confirmPassword?.message,
+            ) && (
               <p className="absolute -bottom-1 left-0 text-xs text-red-500">
                 {(errors as any).confirmPassword?.message}
               </p>
@@ -279,18 +306,27 @@ const UserForm: React.FC<UserFormProps> = ({ isLogin, onSubmit }) => {
               <button
                 type="button"
                 onClick={onHandleDuplication}
-                disabled={!userNameValue || userNameValue.length < 3 || isChecking}
+                disabled={
+                  !userNameValue || userNameValue.length < 3 || isChecking
+                }
                 className="px-2 text-xs bg-neongreen text-black rounded disabled:bg-gray-500 disabled:text-gray-300 whitespace-nowrap"
               >
                 {isChecking ? "확인 중.." : "중복 확인"}
               </button>
             </div>
             <div className="absolute -bottom-1 left-0 right-0">
-              {shouldShowError(userNameValue, (errors as any).userName?.message) && (
-                <p className="text-xs text-red-500">{(errors as any).userName?.message}</p>
+              {shouldShowError(
+                userNameValue,
+                (errors as any).userName?.message,
+              ) && (
+                <p className="text-xs text-red-500">
+                  {(errors as any).userName?.message}
+                </p>
               )}
               {checkedDuplication && (
-                <p className="text-xs text-green-500">사용 가능한 닉네임입니다.</p>
+                <p className="text-xs text-green-500">
+                  사용 가능한 닉네임입니다.
+                </p>
               )}
             </div>
           </div>
@@ -306,7 +342,10 @@ const UserForm: React.FC<UserFormProps> = ({ isLogin, onSubmit }) => {
             defaultChecked={Boolean(savedEmail)}
             className="h-4 w-4 text-neongreen rounded"
           />
-          <label htmlFor="rememberMe" className="ml-2 block text-xs text-offwhite">
+          <label
+            htmlFor="rememberMe"
+            className="ml-2 block text-xs text-offwhite"
+          >
             이메일 저장
           </label>
         </div>
