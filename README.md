@@ -65,7 +65,7 @@
 - 또한, 사용자가 서비스 이용 중 좋아요를 눌렀던 앨범들을 한눈에 볼 수 있는 앨범 리스트를 제공합니다.
 
 ## 📥 프로젝트 구조
-
+```
 spartify
 └──📁 src
     ├── app
@@ -77,6 +77,7 @@ spartify
     ├── store // 🏝 Auth 정보 전역 상태 store
     ├── types // 🛤 타입 관련 설정
     └── utils // 🛸 유틸리티 함수
+```
 
 ## ⚒️ 트러블 슈팅
 📝 [API 타입 지정 오류!!](https://velog.io/@suminlee0409/Spotify-API-%ED%83%80%EC%9E%85-%EC%A7%80%EC%A0%95-%EC%98%A4%EB%A5%98%EA%B0%80-%ED%9D%A0-%EC%9D%B4%EB%B2%88%EC%9D%B4-12303%EB%B2%88%EC%A7%B8%EC%9D%B8%EA%B0%80-%EB%A0%9B%EC%B8%A0%EA%B3%A0)<br>
