@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
-import { getArtistAlbum } from "../route";
-
+// import { getArtistAlbum } from "../route";
+import { getArtistAlbum } from "@/utils/spotify";
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
   const id = searchParams.get("id");

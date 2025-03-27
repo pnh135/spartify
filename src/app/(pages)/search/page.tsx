@@ -1,4 +1,5 @@
-import { getSearchResults } from "@/app/api/spotify/route";
+// import { getSearchResults } from "@/app/api/spotify/route";
+import { getSearchResults } from "@/utils/spotify";
 import AlbumList from "@/components/AlbumList";
 import ArtistList from "@/components/ArtistList";
 import { SpotifyAlbum } from "@/types/album";

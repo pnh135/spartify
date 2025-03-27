@@ -53,7 +53,7 @@ function ProfilePage() {
   useEffect(() => {
     const fetchUser = async () => {
       const userInfo = await getUserInfo();
-      console.log("this is userInfo======> ", userInfo);
+      // console.log("this is userInfo======> ", userInfo);
       // console.log("thsi is urser_img=!!==>", userInfo.profile_img);
       setUserName(userInfo.name);
       // setUserImage(userInfo.profile_img);

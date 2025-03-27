@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { getArtist, getArtistAlbum } from "@/app/api/spotify/route";
+// import { getArtist, getArtistAlbum } from "@/app/api/spotify/route";
+import { getArtist, getArtistAlbum } from "@/utils/spotify";
 import AlbumList from "@/components/AlbumList";
 
 export default async function ArtistDetailPage({

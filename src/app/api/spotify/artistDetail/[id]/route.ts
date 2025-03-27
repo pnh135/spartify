@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { getArtist } from "../../route";
-
+// import { getArtist } from "../../route";
+import { getArtist } from "@/utils/spotify";
 export async function GET(_: Request, { params }: { params: { id: string } }) {
   try {
     const album = await getArtist(params.id);

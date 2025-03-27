@@ -93,7 +93,7 @@ export default function UserSettingModal({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("hellow!!!!!!");
+    // console.log("hellow!!!!!!");
     setProfileSettingModal(false);
     const profileImage: string = await handleImgUpload();
     console.log("profileImage===>", profileImage);
