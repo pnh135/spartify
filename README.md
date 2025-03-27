@@ -13,7 +13,7 @@
 ### 📌 **프로그래밍 언어 및 프레임워크**
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-%E2%9C%94-%233178c6.svg?style=for-the-badge&logo=typescript&logoColor=white)
-![Next.js](https://img.shields.io/badge/Next.js-12.0-%23000000.svg?style=for-the-badge&logo=next.js&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-%23000000.svg?style=for-the-badge&logo=next.js&logoColor=white)
 
 ### 🎨 **UI 프레임워크 및 스타일링**
 
