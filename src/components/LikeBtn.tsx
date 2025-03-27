@@ -36,7 +36,7 @@ const LikeBtn = ({ albumId }: LikeBtnProps) => {
   //좋아요 추가
   const addLikeMutation = useMutation({
     mutationFn: async () => {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("liked_albums")
         .insert({
           user_id: userId,

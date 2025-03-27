@@ -43,7 +43,7 @@ function SignupPage() {
       });
 
       router.push("/login");
-    } catch (error: any) {
+    } catch (error) {
       Swal.fire({
         title: "오류 발생",
         text: `${error}` || "알 수 없는 오류가 발생했습니다.",
