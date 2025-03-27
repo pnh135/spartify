@@ -20,11 +20,11 @@ export default function SearchBar() {
         value={input}
         onChange={e => setInput(e.target.value)}
         placeholder="아티스트 또는 앨범 검색"
-        className="w-full  h-12 md:w-96 p-2 rounded-md border border-gunmetal text-offwhite bg-gunmetal"
+        className="w-full  h-12 md:w-96 p-1 rounded-md border border-gunmetal text-offwhite bg-gunmetal focus:ring-2 focus:ring-inset focus:ring-gray-600 focus:outline-none"
       />
       <button
         type="submit"
-        className="bg-gunmetal text-white px-4 py-2 rounded-md"
+        className="bg-gunmetal text-white px-4 py-3 rounded-md"
       >
         검색
       </button>

@@ -1,5 +1,4 @@
 "use server";
-
 import { getPublicAccessToken } from "@/app/api/spotify/route";
 import { SpotifyAlbum } from "@/types/album";
 

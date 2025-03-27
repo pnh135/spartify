@@ -3,6 +3,7 @@ import AlbumList from "@/components/AlbumList";
 import ArtistList from "@/components/ArtistList";
 import { SpotifyAlbum } from "@/types/album";
 import { SpotifyArtist } from "@/types/artist";
+
 export default async function SearchPage({
   searchParams,
 }: {
