@@ -25,7 +25,8 @@ export interface userType {
 function ProfilePage() {
   const [optionToggle, setOptionToggle] = useState<boolean>(false);
   const [newRelease, setNewRelease] = useState<SpotifyAlbum[]>([]);
-  const [userData, setUserData] = useState<string>("");
+  const [userName, setUserName] = useState<string | null>(null);
+  const [userImage, setUserImage] = useState<string>("");
   const [profileSettingModal, setProfileSettingModal] =
     useState<boolean>(false);
 
@@ -48,16 +49,17 @@ function ProfilePage() {
     fetchData();
   }, []);
 
-  // // 수퍼베이스 유저 정보 갸져오기
+  // 수퍼베이스 유저 정보 갸져오기
   useEffect(() => {
     const fetchUser = async () => {
       const userInfo = await getUserInfo();
       console.log("this is userInfo======> ", userInfo);
-      console.log("thsi is urser_img===>", userData.profile_img);
-      setUserData(userInfo);
+      // console.log("thsi is urser_img=!!==>", userInfo.profile_img);
+      setUserName(userInfo.name);
+      // setUserImage(userInfo.profile_img);
     };
     fetchUser();
-  }, [userData]);
+  }, [userName]);
 
   // 유저 상세 설정 버튼 토글 함수 (점 세개))
   const handleOptionToggle = () => {
@@ -74,11 +76,11 @@ function ProfilePage() {
       <section className="w-full h-[250px] bg-gradient-to-b from-zinc-600 to-zinc-800 rounded-t-2xl flex flex-row items-center mb-8">
         <figure className="relative group w-[200px] h-[200px] flex justify-center items-center text-7xl text-zinc-500 bg-zinc-800 shadow-zinc-900 shadow-lg rounded-full ml-10">
           {/* <HiMiniUser className="opacity-100 group-hover:opacity-0" /> */}
-          {userData.profile_img === "" ? (
+          {userImage === "이미지 없음" || userImage === "" ? (
             <HiMiniUser className="absolute opacity-100 group-hover:opacity-0" />
           ) : // <Image
-          //   src={userData.profile_img}
-          //   alt={""}
+          //   src={userImage}
+          //   alt={"profileImage"}
           //   width={300}
           //   height={300}
           //   className="w-[200px] h-[200px] rounded-full text-sm group-hover:opacity-20"
@@ -95,7 +97,7 @@ function ProfilePage() {
         </figure>
         <section className="text-white ml-10">
           <p className="text-[14px]">프로필</p>
-          <h1 className="text-7xl h-20 font-black mt-3">{userData.name}</h1>
+          <h1 className="text-7xl h-20 font-black mt-3">{userName}</h1>
           <p className="text-[14px] font-normal mt-3">좋아요한 앨범 수 개</p>
         </section>
       </section>
@@ -123,7 +125,8 @@ function ProfilePage() {
               프로필 링크 복사
             </button>
           </section>
-        )}ad
+        )}
+        ad
       </section>
 
       {/* 프로필 수정 모달창 */}

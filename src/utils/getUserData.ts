@@ -3,7 +3,7 @@ import { supabase } from "@/app/api/supabase/supabase";
 export const getUserInfo = async () => {
   // 현재 로그인한 사용자 가져오기
   const { data: user, error: userError } = await supabase.auth.getUser();
-  if (userError || !user?.user) {
+  if (userError || !user.user) {
     console.error("사용자 정보를 가져오는 중 오류 발생:", userError);
     return null;
   }
@@ -22,5 +22,9 @@ export const getUserInfo = async () => {
     return null;
   }
 
+  console.log("userData==>", userData);
+  if (userData.profile_img === null) {
+    userData.profile_img = "";
+  }
   return userData;
 };
