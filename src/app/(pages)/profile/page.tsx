@@ -9,9 +9,8 @@ import { getNewRelease } from "@/utils/fetchNewRelease";
 import UserSettingModal from "@/components/UserSettingModal";
 import type { SpotifyAlbum } from "@/types/album";
 import { getUserInfo } from "@/utils/getUserData";
-import { handleUpdateUserData } from "@/utils/updateUserData";
-import Image from "next/image";
-import useUserStore from "@/store/useUserstore";
+// import { handleUpdateUserData } from "@/utils/updateUserData";
+// import Image from "next/image";
 
 //useEffect 최대한 없애고 tanstackQuery하기!!! 무조건!!!!!!!!!!!!!!무조건!!!!!!!!!!!!!
 export interface userType {
@@ -26,20 +25,20 @@ function ProfilePage() {
   const [optionToggle, setOptionToggle] = useState<boolean>(false);
   const [newRelease, setNewRelease] = useState<SpotifyAlbum[]>([]);
   const [userName, setUserName] = useState<string | null>(null);
-  const [userImage, setUserImage] = useState<string>("");
+  // const [userImage, setUserImage] = useState<string>("");
   const [profileSettingModal, setProfileSettingModal] =
     useState<boolean>(false);
 
-  interface UserMetadata {
-    name?: string;
-  }
+  // interface UserMetadata {
+  //   name?: string;
+  // }
 
-  interface User {
-    user_metadata: UserMetadata;
-  }
+  // interface User {
+  //   user_metadata: UserMetadata;
+  // }
 
-  const { user } = useUserStore() as { user: User | null };
-  const name = user?.user_metadata?.name || "";
+  // const { user } = useUserStore() as { user: User | null };
+  // const name = user?.user_metadata?.name || "";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,6 +54,11 @@ function ProfilePage() {
       const userInfo = await getUserInfo();
       // console.log("this is userInfo======> ", userInfo);
       // console.log("thsi is urser_img=!!==>", userInfo.profile_img);
+
+      if (!userInfo) {
+        console.error("유저 정보를 불러오지 못했습니다.");
+        return;
+      }
       setUserName(userInfo.name);
       // setUserImage(userInfo.profile_img);
     };
@@ -76,16 +80,7 @@ function ProfilePage() {
       <section className="w-full h-[250px] bg-gradient-to-b from-zinc-600 to-zinc-800 rounded-t-2xl flex flex-row items-center mb-8">
         <figure className="relative group w-[200px] h-[200px] flex justify-center items-center text-7xl text-zinc-500 bg-zinc-800 shadow-zinc-900 shadow-lg rounded-full ml-10">
           {/* <HiMiniUser className="opacity-100 group-hover:opacity-0" /> */}
-          {userImage === "이미지 없음" || userImage === "" ? (
-            <HiMiniUser className="absolute opacity-100 group-hover:opacity-0" />
-          ) : // <Image
-          //   src={userImage}
-          //   alt={"profileImage"}
-          //   width={300}
-          //   height={300}
-          //   className="w-[200px] h-[200px] rounded-full text-sm group-hover:opacity-20"
-          // />
-          null}
+          <HiMiniUser className="absolute opacity-100 group-hover:opacity-0" />
           <button
             type="button"
             onClick={handleProfileSetting}
