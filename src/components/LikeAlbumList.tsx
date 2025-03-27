@@ -1,5 +1,6 @@
 import { supabase } from "@/app/api/supabase/supabase";
-import { getAlbum } from "@/app/api/spotify/route";
+// import { getAlbum } from "@/app/api/spotify/route";
+import { getAlbum } from "@/utils/spotify";
 import AlbumList from "./AlbumList";
 import { SpotifyAlbum } from "@/types/album";
 

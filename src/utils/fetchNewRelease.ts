@@ -1,5 +1,6 @@
 "use server";
-import { getPublicAccessToken } from "@/app/api/spotify/route";
+// import { getPublicAccessToken } from "@/app/api/spotify/route";
+import { getPublicAccessToken } from "./spotify";
 import { SpotifyAlbum } from "@/types/album";
 
 export async function getNewRelease(): Promise<SpotifyAlbum[]> {

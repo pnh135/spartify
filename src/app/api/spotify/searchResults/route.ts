@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSearchResults } from "../route";
-
+// import { getSearchResults } from "../route";
+import { getSearchResults } from "@/utils/spotify";
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
   const query = searchParams.get("q");

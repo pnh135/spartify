@@ -49,9 +49,7 @@ export async function getAlbum(id: string): Promise<SpotifyAlbum> {
     },
   });
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch album");
-  }
+  if (!res.ok) throw new Error("Failed to fetch album");
 
   return res.json();
 }

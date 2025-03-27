@@ -62,7 +62,7 @@ export default function TrackList({ tracks }: TrackListProps) {
         ))}
       </ul>
 
-      <audio ref={audioSource} controls className="w-full mt-6" />
+      {/* <audio ref={audioSource} controls className="w-full mt-6" /> */}
     </div>
   );
 }

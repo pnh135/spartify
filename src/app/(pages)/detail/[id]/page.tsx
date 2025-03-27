@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import { getAlbum } from "@/app/api/spotify/route";
+// import { getAlbum } from "@/app/api/spotify/route";
+import { getAlbum } from "@/utils/spotify";
 import TrackList from "@/components/TrackList";
 import LikeBtn from "@/components/LikeBtn";
 import CommentList from "@/components/CommentList";

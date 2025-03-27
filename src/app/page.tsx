@@ -1,10 +1,15 @@
 import AlbumList from "@/components/AlbumList";
 import ArtistList from "@/components/ArtistList";
+// import {
+//   getSeveralArtist,
+//   getPublicAccessToken,
+//   getNewRelease,
+// } from "@/app/api/spotify/route";
 import {
   getSeveralArtist,
   getPublicAccessToken,
   getNewRelease,
-} from "@/app/api/spotify/route";
+} from "@/utils/spotify";
 import { SpotifyAlbum } from "@/types/album";
 import LikeAlbumList from "@/components/LikeAlbumList";
 
